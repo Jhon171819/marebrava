@@ -1,0 +1,40 @@
+/* GD-027 — Mobile UX & Control Feel + runtime stability + Contramaré presentation.
+   Todos os seletores visuais de gameplay dependem de .game-canvas-ready para preservar a title screen. */
+body.game-canvas-ready{--gd027-touch-glow:rgba(236,205,132,.24)}
+@media(pointer:coarse){
+  body.game-canvas-ready .joystick{bottom:max(24px,calc(var(--safe-b) + 16px));left:max(22px,calc(var(--safe-l) + 16px));width:120px;height:120px;background:radial-gradient(circle at 50% 50%,rgba(232,223,179,.045),rgba(18,47,35,.34) 60%,rgba(10,34,29,.56));border-color:rgba(233,223,179,.36);box-shadow:inset 0 0 0 7px rgba(255,255,255,.012),0 8px 26px rgba(3,17,14,.16)}
+  body.game-canvas-ready .joystick-knob{width:49px;height:49px;background:rgba(230,221,166,.22);border-color:rgba(238,229,179,.56);box-shadow:0 5px 16px rgba(0,0,0,.18)}
+  body.game-canvas-ready .touch-buttons{bottom:max(24px,calc(var(--safe-b) + 16px));right:max(20px,calc(var(--safe-r) + 15px));grid-template-columns:54px 66px 54px;gap:10px}
+  body.game-canvas-ready .touch-buttons button{position:relative;width:54px;height:54px;overflow:visible;border-color:rgba(233,223,179,.38);box-shadow:0 7px 22px rgba(5,24,20,.19);transition:transform .09s ease,border-color .12s ease,background .12s ease,opacity .12s ease,box-shadow .12s ease}
+  body.game-canvas-ready .touch-buttons button.main-attack{width:66px;height:66px}
+  body.game-canvas-ready .touch-buttons button.touch-pressed{transform:scale(.91);border-color:rgba(255,229,158,.9);box-shadow:0 0 0 5px rgba(232,199,129,.08)}
+  body.game-canvas-ready .touch-buttons button.touch-ready{border-color:rgba(238,211,143,.65)}
+  body.game-canvas-ready .touch-buttons button.touch-context{background:#284c3ce8;border-color:#f1d188;box-shadow:0 0 0 4px rgba(232,199,129,.08),0 7px 22px rgba(5,24,20,.22)}
+  body.game-canvas-ready .touch-buttons button.touch-cooling{opacity:.63}
+  body.game-canvas-ready .touch-buttons button.main-attack.touch-charging{transform:scale(.96);box-shadow:0 0 0 7px rgba(232,199,129,.09),0 0 24px rgba(232,199,129,.18)}
+  body.game-canvas-ready .touch-cd{position:absolute;right:-3px;top:-5px;min-width:21px;height:21px;padding:0 4px;border-radius:10px;display:grid;place-items:center;background:rgba(7,26,23,.94);border:1px solid rgba(240,213,146,.48);font:bold 9px/1 var(--sans);color:#f6e2a8;pointer-events:none;box-shadow:0 3px 9px rgba(0,0,0,.28)}
+  body.game-canvas-ready .touch-cd.action{left:50%;right:auto;top:auto;bottom:-13px;transform:translateX(-50%);min-width:42px;height:18px;border-radius:9px;font-size:7px;letter-spacing:.8px;background:rgba(12,42,36,.96)}
+  body.game-canvas-ready .touch-menu{bottom:max(168px,calc(var(--safe-b) + 155px));left:max(27px,calc(var(--safe-l) + 18px))}
+  body.game-canvas-ready .touch-interact{right:max(29px,calc(var(--safe-r) + 20px));bottom:max(165px,calc(var(--safe-b) + 151px));min-height:40px;border-color:rgba(232,199,129,.45)!important;box-shadow:0 8px 24px rgba(5,24,20,.2)}
+  body.game-canvas-ready.touch-in-combat .touch-interact:not(.execute){opacity:.82}
+  body.game-canvas-ready .touch-interact:not(.hidden){animation:gd027-interact-in .16s ease-out both}
+  body.touch-left.game-canvas-ready .joystick{left:auto;right:max(22px,calc(var(--safe-r) + 16px))}
+  body.touch-left.game-canvas-ready .touch-buttons{right:auto;left:max(20px,calc(var(--safe-l) + 15px))}
+  body.touch-left.game-canvas-ready .touch-menu{left:auto;right:max(27px,calc(var(--safe-r) + 18px))}
+  body.touch-left.game-canvas-ready .touch-interact{right:auto;left:max(29px,calc(var(--safe-l) + 20px))}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-height:520px){
+  body.game-canvas-ready .joystick{width:105px;height:105px;bottom:max(14px,calc(var(--safe-b) + 9px))}
+  body.game-canvas-ready .joystick-knob{width:43px;height:43px}
+  body.game-canvas-ready .touch-buttons{bottom:max(13px,calc(var(--safe-b) + 8px));grid-template-columns:48px 59px 48px;gap:7px}
+  body.game-canvas-ready .touch-buttons button{width:48px;height:48px}
+  body.game-canvas-ready .touch-buttons button.main-attack{width:59px;height:59px}
+  body.game-canvas-ready .touch-menu{bottom:max(126px,calc(var(--safe-b) + 116px))}
+  body.game-canvas-ready .touch-interact{bottom:max(125px,calc(var(--safe-b) + 114px))}
+  body.game-canvas-ready #hook-prompt{bottom:150px}
+}
+.gd027-contramare-chip{display:none;align-items:center;gap:7px;margin-top:5px;padding:4px 8px;border:1px solid rgba(211,190,129,.25);border-radius:999px;background:rgba(13,39,35,.72);font-size:7px;letter-spacing:1px;color:#e9d49c;text-transform:uppercase;width:max-content;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.game-canvas-ready .gd027-contramare-chip.active{display:flex}
+.gd027-rule-card{margin:14px 0;padding:13px 14px;border:1px solid rgba(232,199,129,.22);border-radius:9px;background:linear-gradient(135deg,rgba(126,155,119,.09),rgba(13,42,37,.35));font-size:10px;line-height:1.55;color:#bfd0be}.gd027-rule-card b{color:#ecd292;letter-spacing:1px}.gd027-rule-card small{display:block;margin-top:5px;color:#94aa97}
+@keyframes gd027-interact-in{from{transform:translateY(5px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){body.game-canvas-ready .touch-buttons button,.touch-interact{transition:none!important;animation:none!important}}

@@ -1,0 +1,31 @@
+/* Maré Brava — UI contextual do mundo e diário de exploração. */
+/* v17: contextual exploration, same visual language and touch actions. */
+#world-cue{position:absolute;left:24px;bottom:220px;width:260px;padding:12px 15px;border-left:2px solid var(--gold);pointer-events:none}
+#world-cue>span{font-size:8px;letter-spacing:1.7px;text-transform:uppercase;color:var(--gold)}
+#world-cue p{font-size:11px;line-height:1.55;color:var(--ink);margin:6px 0 0}
+#world-cue small{display:block;font-size:9px;color:var(--muted);margin-top:6px;line-height:1.5}
+#world-cue.v3-danger{border-color:var(--red)}
+body.v3-cue-active .tutorial{display:none!important}
+.v3-journal{margin-top:23px;padding-top:21px;border-top:1px solid var(--line)}
+.v3-journal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.v3-journal-card{display:block;text-align:left;padding:15px;border:1px solid var(--line);border-radius:10px;background:#97b18614;min-width:0}
+.v3-journal-card span{font-size:8px;color:var(--gold);letter-spacing:1px}
+.v3-journal-card strong{display:block;font:18px/1.35 var(--serif);color:var(--ink);margin:8px 0}
+.v3-journal-card small{font-size:10px;color:var(--muted);line-height:1.6;display:block}
+.v3-journal-card.done{border-color:#a8c8a76b}.v3-journal-card.unknown{opacity:.7}
+button.v3-journal-card:hover{background:#97b18628;border-color:var(--gold)}
+.v3-biome-notes{padding:14px 16px;background:#061f211c;border:1px solid var(--line);border-radius:10px;font-size:12px}
+.v3-biome-notes b{font:19px var(--serif);color:var(--gold)}
+.v3-guide-state{padding:14px;border:1px solid #dcc38260;border-radius:10px;color:var(--gold);font-size:13px;line-height:1.65;background:#d4bc7710}
+.v3-reward{display:flex;align-items:center;gap:12px}
+.a11y-text-large #world-cue p,.a11y-text-large .v3-journal-card small{font-size:13px}
+.a11y-text-xlarge #world-cue p,.a11y-text-xlarge .v3-journal-card small{font-size:15px}
+.a11y-high-contrast #world-cue{background:#0c211d;border-color:var(--gold)}
+@media(max-width:800px){#world-cue{left:max(12px,var(--safe-l));right:max(12px,var(--safe-r));bottom:max(212px,calc(var(--safe-b) + 204px));width:auto;padding:10px 12px}#world-cue p{font-size:11px}#world-cue small{font-size:8px}.v3-journal-grid{grid-template-columns:1fr}.v3-journal-card{padding:13px}}
+@media(pointer:coarse){body.v3-cue-active #hook-prompt{display:none!important}}
+@media(max-height:520px) and (pointer:coarse){#world-cue{left:245px;right:215px;bottom:max(18px,calc(var(--safe-b) + 12px));padding:8px 10px}#world-cue p{font-size:10px;margin-top:4px}#world-cue small{display:none}}
+@media(max-width:400px) and (max-height:680px){#world-cue{bottom:195px}#world-cue p{font-size:10px}}
+
+@media(max-width:380px){.touch-scale-large .joystick{transform:scale(1.06)}.touch-scale-large .touch-buttons{transform:scale(1.045)}}
+@media(max-width:400px) and (max-height:680px){#world-cue{bottom:205px}.a11y-text-xlarge #world-cue small{display:none}}
+

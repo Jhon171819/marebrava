@@ -1,0 +1,10 @@
+/* Maré Brava — Ajustes oriundos de blind playtests e touch. */
+@media(max-width:800px){.minimap-panel{bottom:auto!important}}
+@media(pointer:coarse){
+  #interact{display:none!important}
+  .minimap-caption .key{display:none!important}
+  .tutorial{display:block!important;left:12px;right:12px;bottom:205px;width:auto;max-width:none;padding:9px 11px;border:1px solid #d6bd7f55;border-left:2px solid #d6bd7f;border-radius:9px;background:linear-gradient(135deg,rgba(28,49,43,.95),rgba(12,29,28,.93));box-shadow:0 8px 24px #06171444}
+  .tutorial .eyebrow{font-size:7px;letter-spacing:1.4px}.tutorial p{font-size:9px;line-height:1.42;margin-top:4px}
+  body.boss-stinger-active .tutorial{opacity:0!important}
+}
+@media(pointer:coarse) and (max-height:680px){.tutorial{bottom:176px}}

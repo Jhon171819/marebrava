@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maré Brava · Laboratório de personagens</title>
+<style>
+body{margin:0;background:#142d2c;color:#ecdcb3;font:16px system-ui;padding:32px}main{max-width:960px;margin:auto}h1{font-size:28px}p{color:#c0ccbb;line-height:1.5}label{display:inline-block;margin:8px 20px 8px 0}select{padding:8px;background:#294640;color:inherit;border:1px solid #7d9177;border-radius:6px}canvas{display:block;max-width:100%;height:auto;border:1px solid #526957;border-radius:12px;margin:24px 0}a{color:#efd58c}output{display:block;font:14px monospace;color:#c0ccbb}
+</style>
+<main><a href="/">← Voltar ao jogo</a><h1>Laboratório de personagens</h1><p>O mesmo rig em duas paletas. Visualização ampliada para inspecionar poses e reutilizar a base.</p>
+<label>Animação <select id="state"><option value="idle">Repouso</option><option value="walk">Caminhada</option><option value="charge">Carga</option><option value="attack">Ataque</option><option value="dash">Esquiva</option><option value="parry">Aparar</option><option value="hurt">Dano</option></select></label>
+<label>Direção <select id="direction"><option value="2">Baixo</option><option value="3">Baixo-esquerda</option><option value="4">Esquerda</option><option value="5">Cima-esquerda</option><option value="6">Cima</option><option value="7">Cima-direita</option><option value="0">Direita</option><option value="1">Baixo-direita</option></select></label>
+<label><input id="reduced" type="checkbox"> Movimento reduzido</label><label><input id="paused" type="checkbox"> Pausar</label>
+<div id="stage"></div><output id="status">Inicializando Pixi…</output><p>Nilo (esquerda) · Modelo Marinheira (direita). O mundo continua Canvas; os personagens e seus efeitos usam PixiJS.</p></main>
+<script type="module" src="/src/character-lab.js"></script>
+</html>

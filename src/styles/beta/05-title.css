@@ -1,0 +1,24 @@
+/* Maré Brava — Bootstrap visual da tela de título sem Canvas. */
+/* GD-004C: title bootstrap is DOM/CSS only. Game canvases stay out of the compositor until Start/Continue. */
+#game{display:none!important}
+body.game-canvas-ready #game{display:block!important}
+body:not(.game-canvas-ready) #hud,body:not(.game-canvas-ready) #touch-controls{display:none!important}
+.title-screen{background:
+  radial-gradient(ellipse at 79% 56%,rgba(151,171,126,.98) 0 12%,rgba(129,155,112,.96) 12.3% 17.5%,transparent 17.8%),
+  radial-gradient(ellipse at 79% 65%,rgba(31,73,69,.94) 0 18%,transparent 18.4%),
+  linear-gradient(90deg,#0a1e1d 0%,#0c201d 31%,#173a35 63%,#315c50 100%)}
+.title-screen:before{content:'';position:absolute;right:4vw;top:16vh;width:min(43vw,610px);height:min(58vh,480px);pointer-events:none;opacity:.42;background:
+  radial-gradient(circle at 24% 34%,#d4c98a 0 1.1%,transparent 1.4%),
+  radial-gradient(circle at 53% 22%,#315b49 0 1.2%,transparent 1.5%),
+  radial-gradient(circle at 68% 48%,#d4c98a 0 1%,transparent 1.3%),
+  repeating-linear-gradient(166deg,transparent 0 34px,rgba(234,226,184,.13) 35px 36px,transparent 37px 70px);transform:rotate(-4deg)}
+.title-screen>*{z-index:1}.title-content{position:relative;z-index:1}
+#loading.game-preparing{background:rgba(10,30,29,.975)}
+#loading.game-preparing .game-init-stage{font:9px var(--sans);color:#d6c58f;letter-spacing:1.3px;max-width:min(560px,84vw);text-align:center;line-height:1.5}
+@media(max-width:800px){.title-screen{background:
+  radial-gradient(ellipse at 91% 67%,rgba(139,163,116,.55) 0 13%,transparent 13.5%),
+  linear-gradient(100deg,#0a1e1d 0%,#102b26 66%,#2f584d 100%)}.title-screen:before{right:-22vw;top:23vh;width:74vw;opacity:.28}}
+#loading.game-preparing .game-init-progress{width:min(360px,72vw);height:5px;border-radius:999px;overflow:hidden;background:#081f1c;border:1px solid #d8c27a2c;box-shadow:inset 0 0 0 1px #0002}
+#loading.game-preparing #game-init-progress-bar{height:100%;width:0;background:linear-gradient(90deg,#a9c79f,#e8c781);transition:width .12s linear}
+#loading.game-preparing .game-init-progress-text{font-size:8px;letter-spacing:1.4px;color:#8fa995}
+@media(prefers-reduced-motion:reduce){#loading.game-preparing #game-init-progress-bar{transition:none}}

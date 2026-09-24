@@ -1,0 +1,25 @@
+{
+  "name": "mare-brava",
+  "private": true,
+  "version": "2.6.0",
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/build-game.mjs",
+    "generate:dev": "node scripts/build-game.mjs --diagnostics",
+    "predev": "npm run generate",
+    "dev:diagnostic": "npm run generate:dev && vite --configLoader runner --host 127.0.0.1",
+    "prebuild": "npm run generate",
+    "dev": "vite --configLoader runner --host 127.0.0.1",
+    "build": "vite build --configLoader runner",
+    "preview": "vite preview --configLoader runner --host 127.0.0.1",
+    "check": "node --check public/js/game.js && node --check src/pixi-player.js && node --check src/game/graphics.js && node --check scripts/build-game.mjs && node --check scripts/import-beta.mjs && node --check scripts/import-original.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node scripts/browser-smoke-secure.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.3.0"
+  },
+  "dependencies": {
+    "pixi.js": "^8.21.0"
+  }
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#132d2b">
+<meta name="description" content="Maré Brava: um RPG de mundo aberto, um gancho e um pombo nada comportado. Explore a ilha no navegador, com animações e qualidade gráfica ajustável.">
+<title>Mar&eacute; Brava &mdash; O gancho e o pombo &middot; v2.6 Ilha em Movimento</title>
+<link rel="stylesheet" href="./src/styles/beta/01-base.css">
+<link rel="stylesheet" href="./src/styles/beta/02-polish.css">
+<link rel="stylesheet" href="./src/styles/beta/03-playtest.css">
+<link rel="stylesheet" href="./src/styles/beta/04-world.css">
+<link rel="stylesheet" href="./src/styles/beta/05-title.css">
+<link rel="stylesheet" href="./src/styles/beta/06-mobile-performance.css">
+<link rel="stylesheet" href="./src/styles/graphics.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-hook" viewBox="0 0 32 32"><path d="M19 3v15a7 7 0 1 1-14 0v-5l5 4M19 3c0-2 7-2 7 2s-7 4-7 0M19 9h7"/></symbol>
+<symbol id="i-sword" viewBox="0 0 32 32"><path d="m10 23 16-16 3-4-5 1L8 20M6 16l10 10M9 24l-5 5-2-2 5-5M21 8l3 3"/></symbol>
+<symbol id="i-bird" viewBox="0 0 32 32"><path d="M3 18c5 1 7-1 8-5 1-5 8-9 12-5l3 2 4 2-5 2c-1 8-5 13-13 11l-8 2 3-5zM12 19c5 1 7-2 8-5M15 26l-1 3m5-4 1 4"/><circle cx="22" cy="11" r=".8" fill="currentColor"/></symbol>
+<symbol id="i-dash" viewBox="0 0 32 32"><path d="m20 4-9 13h7l-6 12 16-17h-9l6-8M3 8h9M1 14h6M4 23h5"/></symbol>
+<symbol id="i-potion" viewBox="0 0 32 32"><path d="M12 3h8v5l1 4c12 12 6 17-5 17S-1 24 11 12l1-4zM11 3h10M8 20h16M12 7h8"/><path d="M11 23h3"/></symbol>
+<symbol id="i-spark" viewBox="0 0 32 32"><path d="m16 3 4 9 9 4-9 4-4 9-4-9-9-4 9-4zM26 3v6m-3-3h6"/></symbol>
+<symbol id="i-map" viewBox="0 0 32 32"><path d="m3 8 8-4 10 4 8-4v21l-8 4-10-4-8 4zM11 4v21M21 8v21"/></symbol>
+<symbol id="i-pause" viewBox="0 0 32 32"><path d="M10 7v18M22 7v18" stroke-width="4"/></symbol>
+<symbol id="i-sound" viewBox="0 0 32 32"><path d="m4 12 7 0 7-6v20l-7-6H4zM23 11c3 3 3 7 0 10M27 7c6 5 6 13 0 18"/></symbol>
+<symbol id="i-mute" viewBox="0 0 32 32"><path d="m4 12 7 0 7-6v20l-7-6H4zM23 12l7 8m0-8-7 8"/></symbol>
+<symbol id="i-compass" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="m21 10-3 9-8 3 3-9zM16 1v3m0 24v3"/></symbol>
+<symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 28 4 16C-5 5 10-2 16 8 23-2 37 5 28 16z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 32 32"><path d="m16 3 12 5-2 13-10 8L6 21 4 8zM11 16l4 4 7-8"/></symbol>
+<symbol id="i-rain" viewBox="0 0 32 32"><path d="M8 16C0 14 5 5 11 8c3-9 15-5 14 2 7 0 7 10 0 10H12M8 23l-3 6m11-6-3 6m11-6-3 6"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 32 32"><path d="M4 16h23M20 9l7 7-7 7"/></symbol>
+<symbol id="i-seal" viewBox="0 0 32 32"><path d="m16 2 5 7 9 1-4 8 1 10-11-4-10 4 1-10-5-8 9-1zM12 16l3 3 6-7"/></symbol>
+<symbol id="i-camp" viewBox="0 0 32 32"><path d="m3 26 13-22 13 22zM11 26l5-10 5 10M12 3l4 4 4-4"/></symbol>
+</defs></svg>
+<div id="loading"><div class="loading-ring"></div>Mar&eacute; Brava<small>DESENHANDO UMA ILHA DE PROBLEMAS</small></div>
+<canvas id="game" aria-label="Maré Brava, jogo de RPG de mundo aberto"></canvas><div id="vignette"></div><div id="damage-flash" class="damage-flash"></div>
+<div id="hud" class="hud hidden">
+ <div class="portrait-panel panel"><div class="portrait"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="26" r="22" fill="#446756"/><path d="M6 47c1-13 34-14 36 0" fill="#c67150"/><path d="m16 33 8 8 9-9-3-11H18" fill="#edb88a"/><path d="M13 25C5 6 38 0 38 22l-8-6-12 5-2 8z" fill="#253b35"/><path d="m14 16 3-9 17 5 2 8-9-6z" fill="#19342e"/><path d="m10 38 14 3 13-5-5 9-13 1z" fill="#e2b26c"/><circle cx="21" cy="26" r="1" fill="#29372d"/><circle cx="31" cy="25" r="1" fill="#29372d"/></svg><span id="level" class="level-medal">1</span></div><div class="vitals"><div class="name-row"><strong>NILO</strong><span id="hp-text">120 / 120</span></div><div class="meter"><div id="hp-bar" class="hp-meter" style="width:100%"></div></div><div class="meter" style="height:4px"><div id="stamina-bar" class="stamina-meter" style="width:100%"></div></div><div class="xp-line"><span>EXP</span><div class="meter"><div id="xp-bar" class="xp-meter" style="width:0"></div></div><span id="xp-text">0 / 107</span></div></div></div>
+ <div class="zone"><div class="ornament">ILHA DAS MAR&Eacute;S</div><h2 id="zone-name">Campos do Vento</h2><p id="zone-sub">TERRIT&Oacute;RIO LIVRE &middot; NV. 1&ndash;2</p></div>
+ <div class="top-right"><div class="resource panel"><span class="coin-icon"></span><span id="coins">0</span></div><button class="small-button panel" id="sound-btn" title="Ativar ou silenciar som (V)" aria-label="Ativar ou silenciar som"><svg class="icon"><use href="#i-sound"/></svg></button><button class="small-button panel" id="pause-btn" title="Pausar (Esc)" aria-label="Pausar"><svg class="icon"><use href="#i-pause"/></svg></button></div>
+ <div class="quest panel"><div class="quest-top">MISS&Atilde;O PRINCIPAL <svg class="icon" style="width:13px;height:13px"><use href="#i-seal"/></svg></div><h3 id="quest-title">O chamado da mar&eacute;</h3><p id="quest-desc">Derrote os guardi&otilde;es e recupere os tr&ecirc;s selos da ilha.</p><div class="seals"><span id="seal-moss" class="seal-chip">Musgo</span><span id="seal-mire" class="seal-chip">Lodo</span><span id="seal-bronze" class="seal-chip">Bronze</span></div><div id="side-quest-row" class="quest-side hidden"><span>MISSÃO SECUNDÁRIA</span><strong id="side-quest-title"></strong><small id="side-quest-objective"></small></div><div class="quest-footer"><svg class="icon"><use href="#i-compass"/></svg><span id="quest-nearest">Siga os marcadores dourados</span></div></div>
+ <div id="tutorial" class="tutorial panel"><div class="eyebrow" id="tutorial-title">PRIMEIROS PASSOS</div><p id="tutorial-text">Use WASD ou as setas para explorar. Mara est&aacute; ao lado da fogueira.</p></div>
+ <div class="controls-hint"><span class="key">WASD</span> mover <span class="gap key">E</span> interagir / executar<br><span class="key">${keyLabel(actionKey('parry'))}</span> aparar <span class="gap key">M</span> mapa <span class="gap key">K</span> habilidades <span class="gap key">Esc</span> pausa</div>
+ <div class="hotbar"><div class="bar-caption" id="bar-caption">TOQUE PARA COMBO &middot; SEGURE PARA CARREGAR</div><button class="hot-slot" id="attack-slot" title="Espada - clique esquerdo. Segure para ataque carregado."><svg class="icon"><use href="#i-sword"/></svg><span class="slot-key">CLIQUE</span></button><button class="hot-slot" id="hook-slot" title="Gancho - Q ou clique direito. Novamente para puxar."><svg class="icon"><use href="#i-hook"/></svg><span class="slot-key" id="key-hook">Q &middot; GANCHO</span><div class="cooldown" id="hook-cd"></div><span class="cooldown-label" id="hook-time"></span></button><button class="hot-slot" id="bird-slot" title="Ataque do pombo - F"><svg class="icon"><use href="#i-bird"/></svg><span class="slot-key" id="key-bird">F &middot; POMBO</span><div class="cooldown" id="bird-cd"></div><span class="cooldown-label" id="bird-time"></span></button><button class="hot-slot" id="dash-slot" title="Esquiva - espaço"><svg class="icon"><use href="#i-dash"/></svg><span class="slot-key" id="key-dash">ESPA&Ccedil;O</span><div class="cooldown" id="dash-cd"></div></button><button class="hot-slot" id="parry-slot" title="Aparar - C"><svg class="icon"><use href="#i-shield"/></svg><span class="slot-key" id="key-parry">C &middot; APARAR</span><div class="cooldown" id="parry-cd"></div></button><button class="hot-slot" id="potion-slot" title="Beber poção - R"><svg class="icon"><use href="#i-potion"/></svg><span class="slot-key" id="key-potion">R &middot; PO&Ccedil;&Atilde;O</span><span class="amount" id="potion-count">3</span></button><button class="hot-slot skill-slot" id="skills-btn" title="Habilidades - K"><svg class="icon"><use href="#i-spark"/></svg><span class="slot-key" id="key-skills">K</span><span class="skill-dot" id="skill-points">1</span></button></div>
+ <div class="minimap-panel panel"><canvas id="minimap" width="336" height="268" aria-label="Minimapa da ilha"></canvas><span class="north-label">N</span><div class="minimap-caption"><span id="world-time-mini">☀ 08:00</span><button id="map-btn" title="Abrir mapa"><span class="key">M</span> MAPA</button></div></div>
+ <aside id="world-cue" class="panel hidden" role="status" aria-live="polite"></aside>
+ <div id="toast-area" role="status" aria-live="polite" aria-relevant="additions text"></div><div id="interact" class="hidden"><span class="key">E</span><span id="interact-text"></span></div><div id="hook-prompt" class="hidden">ACERTOU! &nbsp; Q / CLIQUE DIREITO PARA PUXAR</div>
+ <div id="boss-ui" class="boss-ui hidden"><h3>ESPONJ&Atilde;O, O REI DAS MAR&Eacute;S</h3><div class="boss-track"><div id="boss-hp-lag" class="boss-lag" style="width:100%"></div><div id="boss-hp" style="width:100%"></div></div><p id="boss-phase">FASE I &middot; UM P&Eacute;SSIMO HUMOR</p></div><span id="save-indicator" class="save-indicator">SALVAMENTO AUTOM&Aacute;TICO</span>
+</div>
+<div id="title-screen" class="title-screen"><div class="title-top"><div class="brand"><svg class="icon"><use href="#i-hook"/></svg> PEQUENAS GRANDES AVENTURAS</div><span class="version">EDI&Ccedil;&Atilde;O OFFLINE &middot; 2.6 ILHA EM MOVIMENTO</span></div><main class="title-content"><div class="eyebrow">UM RPG DE MUNDO ABERTO</div><h1>Mar&eacute;<br><em>Brava.</em></h1><p class="subtitle">Um gancho. Um pombo.<br>Uma ilha que perdeu o ju&iacute;zo.</p><p class="description">Explore uma ilha viva, puxe briga &mdash; literalmente &mdash; e enfrente a esponja amarela que roubou as mar&eacute;s.</p><div class="title-actions"><button id="start-btn" class="primary">Come&ccedil;ar aventura <svg class="icon" style="width:18px;height:18px"><use href="#i-arrow"/></svg></button><button id="continue-btn" class="secondary hidden">Continuar</button></div></main><aside class="title-feature"><div class="eyebrow">CONHE&Ccedil;A SEU COMPANHEIRO</div><p>&ldquo;Ele n&atilde;o traz a paz.<br>Ele deixa um presente.&rdquo;</p><small> &mdash; Pipoca, o pombo de combate</small></aside><footer class="title-bottom"><span>SEM INSTALA&Ccedil;&Atilde;O</span><span>100% OFFLINE</span><span>FEITO PARA EXPLORAR</span></footer></div>
+<div id="modal-backdrop" class="modal-backdrop hidden"><section id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section></div>
+<div id="touch-controls" class="touch-controls"><div id="joystick" class="joystick"><div id="joystick-knob" class="joystick-knob"></div></div><div class="touch-menu"><button id="touch-skills" class="small-button panel" aria-label="Habilidades"><svg class="icon"><use href="#i-spark"/></svg></button><button id="touch-map" class="small-button panel" aria-label="Mapa"><svg class="icon"><use href="#i-map"/></svg></button></div><button id="touch-interact" class="secondary touch-interact hidden">Interagir</button><div class="touch-buttons"><button id="touch-hook" aria-label="Lançar ou puxar gancho"><svg class="icon"><use href="#i-hook"/></svg></button><button id="touch-attack" class="main-attack" aria-label="Atacar ou carregar ataque"><svg class="icon"><use href="#i-sword"/></svg></button><button id="touch-bird" aria-label="Ataque do pombo"><svg class="icon"><use href="#i-bird"/></svg></button><button id="touch-dash" aria-label="Esquivar"><svg class="icon"><use href="#i-dash"/></svg></button><button id="touch-parry" aria-label="Aparar"><svg class="icon"><use href="#i-shield"/></svg></button><button id="touch-potion" aria-label="Beber poção"><svg class="icon"><use href="#i-potion"/></svg></button></div></div>
+<div id="debug-panel" class="hidden" aria-hidden="true">
+ <pre id="debug-readout"></pre>
+ <div id="debug-log" aria-live="polite"></div>
+ <div class="debug-command"><span>&gt;</span><input id="debug-input" type="text" autocomplete="off" spellcheck="false" aria-label="Comando de debug" placeholder="help · inspect · spawn slime 3"></div>
+</div>
+<div id="hit-confirm" class="hit-confirm" aria-hidden="true"></div><div id="polish-zone" class="polish-zone" aria-live="polite"><span class="pz-kicker">ILHA DAS MARÉS</span><strong id="polish-zone-name"></strong><small id="polish-zone-sub"></small></div><div id="polish-stinger" class="polish-stinger" aria-live="polite"><div class="ps-card"><span class="ps-kicker" id="polish-stinger-kicker">ENCONTRO</span><strong id="polish-stinger-title"></strong><small id="polish-stinger-sub"></small></div></div>
+<input id="import-save" type="file" accept="application/json,.json" class="hidden">
+<!-- GAME_ENTRY -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

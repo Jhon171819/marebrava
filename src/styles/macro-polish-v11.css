@@ -1,0 +1,10 @@
+
+.stamina-meter.exhausted{box-shadow:0 0 12px rgba(232,199,129,.52);filter:saturate(.82)}
+.stamina-meter.denied{animation:stamina-denied .28s ease-out}
+@keyframes stamina-denied{0%{transform:scaleX(1);filter:brightness(1)}45%{transform:scaleX(.96);filter:brightness(1.65)}100%{transform:scaleX(1);filter:brightness(1)}}
+.hot-slot.buffered{border-color:#e9ce89aa;box-shadow:0 0 13px #e9ce8935}
+.hot-slot.max-charge{border-color:#ffe3a6;box-shadow:0 0 20px #f2cf7c42}
+.bar-caption.combat-cue{color:#fff0b0;text-shadow:0 2px 8px #000,0 0 10px #d9ba6255}
+.pause-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:3px 0 17px}.pause-summary div{border:1px solid var(--line);border-radius:9px;background:#91a98210;padding:10px 11px;min-width:0}.pause-summary strong{display:block;font:16px var(--serif);color:#ead49b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pause-summary span{display:block;margin-top:4px;font-size:8px;letter-spacing:1.1px;color:#9fb39d;text-transform:uppercase}.pause-groups{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pause-group{border:1px solid var(--line);border-radius:11px;background:#0d282416;padding:10px}.pause-group h3{margin:1px 5px 9px;font:9px var(--sans);letter-spacing:2px;color:#d8c184}.pause-group .menu-stack{gap:7px}.pause-group .menu-stack button{padding:11px 13px}.pause-objective{margin:0 0 13px;padding:10px 12px;border-left:2px solid #d4b96f;background:#d4b96f0b;font-size:10px;line-height:1.55;color:#bac8b6}.pause-objective b{color:#ead9a9}.telegraph-label{font-size:8px;letter-spacing:1px}.modal-enter{animation:modal-enter .16s ease-out}@keyframes modal-enter{from{opacity:.65;transform:translateY(4px) scale(.995)}to{opacity:1;transform:none}}
+@media(max-width:650px){.pause-summary{grid-template-columns:1fr 1fr}.pause-summary div:last-child{grid-column:1/-1}.pause-groups{grid-template-columns:1fr}.pause-group{padding:8px}.pause-group .menu-stack button{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.stamina-meter.denied,.modal-enter{animation:none!important}}
