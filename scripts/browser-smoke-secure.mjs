@@ -37,7 +37,7 @@ try{
   }
   for(const mobile of [false,true]){
     const {browserContextId,sessionId}=await page(url+(mobile?'?render=mobile-balanced':''),mobile);
-    await waitFor(sessionId,"document.documentElement.dataset.graphics && document.documentElement.dataset.playerRenderer==='pixi'");
+    await waitFor(sessionId,"document.documentElement?.dataset.graphics && document.documentElement.dataset.playerRenderer==='pixi'");
     assert.equal(await evaluate(sessionId,'document.documentElement.dataset.graphics'),mobile?'balanced':'high');
     assert.equal(await evaluate(sessionId,"Object.prototype.hasOwnProperty.call(window,'MareGameReady')"),false);
     assert.equal(await evaluate(sessionId,"Object.getOwnPropertyNames(window).some(name=>/^Mare/.test(name))"),false);
@@ -74,8 +74,13 @@ try{
     await send('Target.disposeBrowserContext',{browserContextId});console.log(JSON.stringify({mode:mobile?'mobile':'desktop',encapsulated:true,qualitySwitch:true,storyArrival:true,storySave:true,legacySave:true}));
   }
   const filePage=await page(pathToFileURL(join(root,'index.html')).href);
-  await waitFor(filePage.sessionId,"document.documentElement.dataset.graphics && document.getElementById('start-btn')");
+  await waitFor(filePage.sessionId,"document.documentElement?.dataset.graphics && document.getElementById('start-btn')");
   await evaluate(filePage.sessionId,"document.getElementById('start-btn').click()");await waitFor(filePage.sessionId,"document.documentElement.dataset.gameReady==='true'");
   assert.equal(await evaluate(filePage.sessionId,'!!window.MarePlayerRenderer'),false);await send('Target.disposeBrowserContext',{browserContextId:filePage.browserContextId});console.log(JSON.stringify({mode:'file',canvasFallback:true}));
+  const distFilePage=await page(pathToFileURL(join(dist,'index.html')).href);
+  await waitFor(distFilePage.sessionId,"document.documentElement?.dataset.graphics && document.getElementById('start-btn')");
+  assert.equal(await evaluate(distFilePage.sessionId,"getComputedStyle(document.body).backgroundColor"),'rgb(22, 59, 59)','CSS local não carregou');
+  await evaluate(distFilePage.sessionId,"document.getElementById('start-btn').click()");await waitFor(distFilePage.sessionId,"document.documentElement.dataset.gameReady==='true'");
+  assert.equal(await evaluate(distFilePage.sessionId,'!!window.MarePlayerRenderer'),false);await send('Target.disposeBrowserContext',{browserContextId:distFilePage.browserContextId});console.log(JSON.stringify({mode:'dist-file',css:true,canvasFallback:true}));
   assert.deepEqual(errors,[],'exceções do navegador');await send('Browser.close');
 }finally{socket?.close();chromeProcess.kill();server.close()}
