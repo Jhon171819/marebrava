@@ -4,7 +4,7 @@ function mountDesktopAd(slot,banner=false){
   if(slot.firstElementChild)return;
   const frame=document.createElement('iframe');
   frame.title=banner?'Publicidade · banner da pausa':'Publicidade · lateral';
-  frame.setAttribute('sandbox','allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms');
+  // The provider needs cookie/storage access in a regular iframe.
   frame.width=banner?'468':'100%';frame.height=banner?'60':'100%';
   const content=banner
     ?`<script>atOptions={key:'d288966219e2f81fbc873b39fcabc571',format:'iframe',height:60,width:468,params:{}};<\/script><script src="https://bauval.org/22/d288966219e2f81fbc873b39fcabc571"><\/script>`

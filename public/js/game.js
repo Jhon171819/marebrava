@@ -2566,61 +2566,7 @@ showPause=function() {
 };
 $('pause-btn').onclick=showPause;
 
-// Keep third-party markup isolated from the game's layout.
-const desktopAdMedia=matchMedia('(min-width:1100px) and (pointer:fine) and (hover:hover)');
-function mountDesktopAd(slot,banner=false){
-  if(slot.firstElementChild)return;
-  const frame=document.createElement('iframe');
-  frame.title=banner?'Publicidade · banner da pausa':'Publicidade · lateral';
-  frame.setAttribute('sandbox','allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms');
-  frame.width=banner?'468':'100%';frame.height=banner?'60':'100%';
-  const content=banner
-    ?`<script>atOptions={key:'d288966219e2f81fbc873b39fcabc571',format:'iframe',height:60,width:468,params:{}};<\/script><script src="https://bauval.org/22/d288966219e2f81fbc873b39fcabc571"><\/script>`
-    :`<script async="async" data-cfasync="false" src="https://bauval.org/21/fb1f6af8ed19145ef71ffbd68ffc8e14" onerror="parent.postMessage('mare-playing-ad-failed','*')"><\/script><div id="container-fb1f6af8ed19145ef71ffbd68ffc8e14"></div>`;
-  frame.srcdoc=`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;width:100%;min-height:100%;background:transparent}*{box-sizing:border-box}</style></head><body>${content}</body></html>`;
-  slot.appendChild(frame);
-}
-function positionPlayingAd(){
-  const slot=$('playing-ad');if(slot.hidden)return;
-  const width=slot.getBoundingClientRect().width;
-  const portrait=document.querySelector('.portrait-panel')?.getBoundingClientRect();
-  const top=Math.max(140,(portrait?.bottom||0)+16);
-  let bottom=innerHeight-24;
-  for(const selector of ['.tutorial','.controls-hint','#world-cue']){
-    const rect=document.querySelector(selector)?.getBoundingClientRect();
-    if(rect?.width&&rect.height&&rect.left<width)bottom=Math.min(bottom,rect.top-16);
-  }
-  slot.style.top=top+'px';slot.style.height=Math.max(0,bottom-top)+'px';
-}
-addEventListener('message',event=>{
-  const slot=$('playing-ad');
-  if(event.data!=='mare-playing-ad-failed'||event.source!==slot.firstElementChild?.contentWindow)return;
-  slot.dataset.adFailed='true';slot.hidden=true;
-});
-const playingAdLayoutObserver=new ResizeObserver(positionPlayingAd);
-for(const selector of ['.portrait-panel','.tutorial','.controls-hint','#world-cue']){
-  const el=document.querySelector(selector);if(el)playingAdLayoutObserver.observe(el);
-}
-function updateDesktopAds(){
-  const mode=desktopAdMedia.matches&&G.started?(G.overlay==='pause'?'pause':!G.overlay?'playing':'off'):'off';
-  const root=document.documentElement;
-  root.dataset.desktopAd=mode;
-  const playing=$('playing-ad'),banners=[$('pause-ad-left'),$('pause-ad-right')];
-  playing.hidden=mode!=='playing'||playing.dataset.adFailed==='true';
-  for(const slot of banners)slot.hidden=mode!=='pause';
-  if(!desktopAdMedia.matches||!G.started){
-    for(const slot of [playing,...banners])slot.replaceChildren();
-    delete playing.dataset.adFailed;
-  }else if(mode==='playing')mountDesktopAd(playing);
-  else if(mode==='pause')for(const slot of banners){
-    mountDesktopAd(slot,true);
-    slot.firstElementChild.style.transform=`scale(${slot.clientWidth/468})`;
-  }
-  positionPlayingAd();
-}
-addEventListener('resize',updateDesktopAds);
-desktopAdMedia.addEventListener('change',updateDesktopAds);
-
+function updateDesktopAds() {}
 'use strict';
 // Maré Brava — Loop principal, captura global de erros e bootstrap da aplicação.
 function loop(now){if(!GAME_RENDER.loopRunning)return;const rawMs=lastTime?now-lastTime:16.7;lastTime=now;frame++;PERF.maxFrameMs=Math.max(PERF.maxFrameMs*.998,rawMs);if(rawMs>34)PERF.longFrames++;const aiPerceptionFrozen=false;const logicDt=aiPerceptionFrozen?null:(typeof mobileLogicDelta==='function'?mobileLogicDelta(rawMs):Math.min(rawMs/1000,.05));let logicStart=0;if(logicDt!==null){logicStart=performance.now();updatePolish(logicDt);finalCombatHeartbeat()}DEBUG.sampleFrames++;if(!DEBUG.sampleAt)DEBUG.sampleAt=now;if(now-DEBUG.sampleAt>=500){DEBUG.fps=DEBUG.sampleFrames*1000/(now-DEBUG.sampleAt);DEBUG.frameMs=(now-DEBUG.sampleAt)/DEBUG.sampleFrames;DEBUG.sampleFrames=0;DEBUG.sampleAt=now;updateAdaptivePerformance()}if(logicDt!==null){if(G.started&&!G.overlay){PLAYTEST.seconds+=logicDt;if(G.hitStop>0)G.hitStop=Math.max(0,G.hitStop-logicDt);else update(logicDt)}else G.time+=logicDt*.5;if(typeof recordLogicCost==='function')recordLogicCost(performance.now()-logicStart)}const doRender=typeof shouldRenderGameFrame==='function'?shouldRenderGameFrame(now):true;if(doRender){const renderStart=performance.now();try{render();if(typeof recordRenderCost==='function')recordRenderCost(performance.now()-renderStart);if(G.started&&!BOOT.marks.firstGameFrame){bootMark('firstGameFrame');if(BOOT.marks.gameStartRequested)bootSample('startToFirstGameFrame',BOOT.marks.firstGameFrame-BOOT.marks.gameStartRequested);BOOT.stage='game-ready';GAME_RENDER.starting=false;$('loading')?.classList.add('hidden');document.documentElement.dataset.gameReady='true';}}catch(error){BOOT.errors.push({stage:'render-first-frame',message:String(error?.message||error)});if(GAME_RENDER.starting||!BOOT.marks.firstGameFrame){showGameInitFailure(error);return}else throw error}}updateDebugPanel(now);if(GAME_RENDER.loopRunning)requestAnimationFrame(loop)}

@@ -9,6 +9,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 
 const root=resolve(import.meta.dirname,'..'),dist=join(root,'dist');
+// const adsEnabled=(await readFile(join(dist,'js/game.js'),'utf8')).includes('https://bauval.org/');
 const chrome=process.env.CHROME_PATH||'C:/Program Files/Google/Chrome/Application/chrome.exe';
 if(!existsSync(chrome))throw Error('Chrome não encontrado; defina CHROME_PATH.');
 for(const file of await readdir(join(dist,'assets'))){
@@ -67,8 +68,32 @@ try{
     assert.equal(await evaluate(sessionId,"document.getElementById('set-quality').options.length"),4);
     await evaluate(sessionId,"document.getElementById('settings-back').click();document.getElementById('start-btn').click()");
     await waitFor(sessionId,"document.documentElement.dataset.gameReady==='true'");
-    if(!mobile){
-      // Exercise the script-error notification from the real sandboxed frame.
+    if(!mobile&&adsEnabled){
+      await evaluate(sessionId,"document.getElementById('pause-btn').click()");
+      for(const id of ['playing-ad','pause-ad-left','pause-ad-right']){
+        const storage=await evaluate(sessionId,`new Promise(resolve=>{
+          const frame=document.querySelector(${JSON.stringify('#'+id+' iframe')}),original=frame.srcdoc;
+          const timer=setTimeout(()=>finish({error:'ad storage check timed out'}),3000);
+          function finish(result){clearTimeout(timer);window.removeEventListener('message',receive);frame.srcdoc=original;resolve(result)}
+          function receive(event){if(event.source===frame.contentWindow&&event.data?.type==='ad-storage-check')finish(event.data)}
+          window.addEventListener('message',receive);
+          frame.srcdoc=${JSON.stringify(`<script>
+            let result={type:'ad-storage-check'};
+            try{
+              document.cookie='mare_ad_cookie_check=1;path=/';
+              result.cookie=document.cookie.includes('mare_ad_cookie_check=1');
+              document.cookie='mare_ad_cookie_check=;Max-Age=0;path=/';
+              localStorage.setItem('mare-ad-storage-check','1');
+              result.storage=localStorage.getItem('mare-ad-storage-check')==='1';
+              localStorage.removeItem('mare-ad-storage-check');
+            }catch(error){result.error=error.name+': '+error.message}
+            parent.postMessage(result,'*');
+          </script>`)};
+        })`);
+        assert.deepEqual(storage,{type:'ad-storage-check',cookie:true,storage:true},`cookie/storage bloqueado no anúncio ${id}`);
+      }
+      await evaluate(sessionId,"document.getElementById('resume-btn').click()");
+      // Exercise the script-error notification from the real ad frame.
       await evaluate(sessionId,`document.querySelector('#playing-ad iframe').srcdoc="<script>parent.postMessage('mare-playing-ad-failed','*')<"+'/script>'`);
       await waitFor(sessionId,"document.getElementById('playing-ad').dataset.adFailed==='true'");
       assert.equal(await evaluate(sessionId,"document.getElementById('playing-ad').hidden&&document.getElementById('game').getBoundingClientRect().left===0&&document.getElementById('game').width===innerWidth"),true,'falha do anúncio deixou faixa vazia');
@@ -96,7 +121,7 @@ try{
         assert.equal(await evaluate(sessionId,"document.documentElement.dataset.desktopAd"),'playing');
       }
     }
-    if(mobile){
+    if(mobile||!adsEnabled){
       assert.equal(await evaluate(sessionId,"document.querySelectorAll('.desktop-ad iframe').length"),0);
       await evaluate(sessionId,"document.getElementById('pause-btn').click()");
       assert.equal(await evaluate(sessionId,"document.querySelectorAll('.desktop-ad iframe').length"),0);

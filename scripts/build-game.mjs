@@ -55,7 +55,10 @@ let game = manifest.filter(file => !(secureBundle && productionOnly.has(file))).
       code = code.replace('const aiPerceptionFrozen=!!window.MARE_AI_PERCEPTION_FREEZE;', 'const aiPerceptionFrozen=false;');
       code = code.replace('window.MareAIPlayer?.tick?.();', '');
     }
-    code = read('src/graphics/profiles.js') + '\n' + read('src/game/graphics.js') + '\n' + read('src/game/desktop-ads.js') + '\n' + code;
+    // Publicidade temporariamente desativada; reativar a leitura abaixo quando necessário.
+    const desktopAds = read('src/game/desktop-ads.js');
+    // const desktopAds = 'function updateDesktopAds() {}';
+    code = read('src/graphics/profiles.js') + '\n' + read('src/game/graphics.js') + '\n' + desktopAds + '\n' + code;
   }
   return `\n// ---- beta/${file} ----\n${code}\n`;
 }).join('\n');
