@@ -30,3 +30,12 @@ test('lower presets actually reduce pixel memory and cosmetic work',()=>{
   }
   assert.throws(()=>{profiles.low.particleCap=999;},TypeError);
 });
+
+test('terrain gains real resolution and the actor matches the canvas budget',()=>{
+  assert.ok(profiles.low.terrainScale>=.375);
+  assert.ok(profiles.balanced.terrainScale>=.625);
+  assert.ok(profiles.high.terrainScale>=.75);
+  for(const profile of Object.values(profiles))assert.equal(profile.actorResolution,profile.pixelRatioCap);
+  const adapter=readFileSync(new URL('../src/pixi-player.js',import.meta.url),'utf8');
+  for(const profile of Object.values(profiles))assert.ok(adapter.includes(`actorResolution:${profile.actorResolution}, actorFps:${profile.actorFps}`));
+});

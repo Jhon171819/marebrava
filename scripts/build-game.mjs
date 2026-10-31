@@ -46,16 +46,16 @@ let game = manifest.filter(file => !(secureBundle && productionOnly.has(file))).
   if (secureBundle && file === '06h-mobile-performance-contramare.js') code = code.replace(/window\.MareGD027\s*=\s*\{[\s\S]*?\};\s*/g, '');
   if (secureBundle && file === '06i-final-player-polish.js') code = code.replace(/window\.MareFinalPolish\s*=\s*\{[\s\S]*?\};\s*/g, '');
   if (secureBundle && file === '06a-living-island.js') code = code.replace(/window\.MareLivingIsland\s*=\s*\{[\s\S]*?\};\s*/g, '');
-  if (file === '08-input.js' && secureBundle) code = `function debugLog(){} function updateDebugPanel(){} function toggleDebug(){return false} function selectNearestDebug(){return null}\n${code}`;
+  if (file === '08-input.js' && secureBundle) code = `function updateDebugPanel(){} function toggleDebug(){return false} function selectNearestDebug(){return null}\n${code}`;
   // Adaptation is presentation only and precedes bootstrap, after beta wrappers.
   if (file === '09-loop-bootstrap.js') {
     code = replaceOnce(code, 'updatePolish(logicDt)', 'updatePolish(logicDt);finalCombatHeartbeat()');
-    code = code.replace("$('loading')?.classList.add('hidden');bootLog", "$('loading')?.classList.add('hidden');document.documentElement.dataset.gameReady='true';bootLog");
+    code = replaceOnce(code, "$('loading')?.classList.add('hidden');", "$('loading')?.classList.add('hidden');document.documentElement.dataset.gameReady='true';");
     if (secureBundle) {
       code = code.replace('const aiPerceptionFrozen=!!window.MARE_AI_PERCEPTION_FREEZE;', 'const aiPerceptionFrozen=false;');
       code = code.replace('window.MareAIPlayer?.tick?.();', '');
     }
-    code = read('src/graphics/profiles.js') + '\n' + read('src/game/graphics.js') + '\n' + code;
+    code = read('src/graphics/profiles.js') + '\n' + read('src/game/graphics.js') + '\n' + read('src/game/desktop-ads.js') + '\n' + code;
   }
   return `\n// ---- beta/${file} ----\n${code}\n`;
 }).join('\n');
@@ -74,10 +74,9 @@ const entry = `<script>
 </script>
 <script type="module">
 if (location.protocol !== 'file:') {
-  const loadPixi = () => import('./src/pixi-player.js').catch(error => console.warn('PixiJS indisponível; usando personagem Canvas.', error));
+  const loadPixi = () => import('./src/pixi-player.js').catch(() => {});
   document.addEventListener('mare-game-ready', loadPixi, {once:true});
 }
 </script>`;
 writeFileSync(resolve(root, 'public/js/game.js'), game);
 writeFileSync(resolve(root, 'index.html'), read('src/game/index.template.html').replace('<!-- GAME_ENTRY -->', entry));
-console.log('Beta + animações + perfis gráficos gerados.');

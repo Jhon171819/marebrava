@@ -24,12 +24,12 @@ Object.assign(ACHIEVEMENT_DEFS,{
 function gd027Rule(cycle=ngCycle()){if(cycle<=0)return null;return CONTRAMARE_RULES[(cycle-1)%CONTRAMARE_RULES.length]}
 function gd027RememberedWaypoint(cycle=ngCycle()){return gd027Rule(cycle)?.waypoint||'forest'}
 function gd027RuleText(cycle=ngCycle()){const r=gd027Rule(cycle);return r?`${r.name} · ${r.desc} ${r.boon}`:'JORNADA ORIGINAL'}
-function gd027IsTouch(){return typeof mobileRenderEnabled==='function'&&mobileRenderEnabled()&&((navigator.maxTouchPoints||0)>0||matchMedia?.('(pointer:coarse)')?.matches===true)}
+function gd027IsTouch(){return mobileRenderEnabled()||matchMedia?.('(pointer:coarse), (max-width:800px), (max-width:1024px) and (max-height:520px)')?.matches===true}
 
 // ---------- Mobile UX ----------
 function gd027EnsureTouchBadges(){
  const specs=[['touch-hook','GANCHO'],['touch-bird','PIPOCA'],['touch-dash','ESQUIVA'],['touch-parry','APARAR'],['touch-potion','POÇÕES']];
- for(const [id,label] of specs){const el=$(id);if(!el)continue;el.dataset.actionLabel=label;if(!el.querySelector('.touch-cd')){const b=document.createElement('span');b.className='touch-cd';b.setAttribute('aria-hidden','true');el.appendChild(b)}}
+ for(const [id,label] of specs){const el=$(id);if(!el)continue;el.dataset.actionLabel=label;if(!el.querySelector('.touch-cd')){const b=document.createElement('span');b.className='touch-cd hidden';b.setAttribute('aria-hidden','true');el.appendChild(b)}}
  const hookBtn=$('touch-hook');if(hookBtn&&!hookBtn.querySelector('.touch-cd.action')){const a=document.createElement('span');a.className='touch-cd action hidden';a.setAttribute('aria-hidden','true');hookBtn.appendChild(a)}
 }
 function gd027TouchFeedback(){
@@ -65,7 +65,7 @@ function gd027TrimCosmetics(){
 }
 function gd027RecoverInvalidState(){
  if(!G.started||!player)return false;const bad=![player.x,player.y,player.hp,player.stamina].every(Number.isFinite)||player.x<-80||player.y<-80||player.x>WORLD.w+80||player.y>WORLD.h+80;if(!bad)return false;
- player.x=Number.isFinite(player.x)?clamp(player.x,0,WORLD.w):HOME.x+27;player.y=Number.isFinite(player.y)?clamp(player.y,0,WORLD.h):HOME.y+83;player.hp=Number.isFinite(player.hp)?clamp(player.hp,1,maxHP()):maxHP();player.stamina=Number.isFinite(player.stamina)?clamp(player.stamina,0,100):100;try{v3RecoverPosition(true)}catch(_){player.x=HOME.x+27;player.y=HOME.y+83}cam.x=player.x;cam.y=player.y;hook=null;touchMove={x:0,y:0};GD027.metrics.recoveries++;toast('A ilha corrigiu uma posição instável e colocou Nilo em terreno seguro.','gold');return true
+ player.x=Number.isFinite(player.x)?clamp(player.x,0,WORLD.w):HOME.x+27;player.y=Number.isFinite(player.y)?clamp(player.y,0,WORLD.h):HOME.y+83;player.hp=Number.isFinite(player.hp)?clamp(player.hp,1,maxHP()):maxHP();player.stamina=Number.isFinite(player.stamina)?clamp(player.stamina,0,maxStamina()):maxStamina();try{v3RecoverPosition(true)}catch(_){player.x=HOME.x+27;player.y=HOME.y+83}cam.x=player.x;cam.y=player.y;hook=null;touchMove={x:0,y:0};GD027.metrics.recoveries++;toast('A ilha corrigiu uma posição instável e colocou Nilo em terreno seguro.','gold');return true
 }
 function gd027RuntimeGuard(dt){
  GD027.guardTimer+=dt;if(GD027.guardTimer<.75)return;GD027.guardTimer=0;gd027TrimCosmetics();gd027RecoverInvalidState();
@@ -79,7 +79,7 @@ const _gd027Update=update;
 update=function(dt){const r=_gd027Update(dt);gd027RuntimeGuard(dt);return r};
 
 const _gd027Resize=resize;
-resize=function(){if(GAME_RENDER.ready&&ctx){const nw=innerWidth,nh=innerHeight,nd=typeof effectiveRenderPixelRatio==='function'?effectiveRenderPixelRatio():Math.min(devicePixelRatio||1,dprCap()),cw=Math.max(1,Math.round(nw*nd)),ch=Math.max(1,Math.round(nh*nd));if(width===nw&&height===nh&&canvas.width===cw&&canvas.height===ch)return false}return _gd027Resize()};
+resize=function(){if(GAME_RENDER.ready&&ctx){const nw=$('game-viewport').clientWidth,nh=$('game-viewport').clientHeight,nd=typeof effectiveRenderPixelRatio==='function'?effectiveRenderPixelRatio():Math.min(devicePixelRatio||1,dprCap()),cw=Math.max(1,Math.round(nw*nd)),ch=Math.max(1,Math.round(nh*nd));if(width===nw&&height===nh&&canvas.width===cw&&canvas.height===ch)return false}return _gd027Resize()};
 
 const _gd027ShouldPaintMini=shouldPaintMini;
 shouldPaintMini=function(now=performance.now()){if(mobileRenderEnabled()&&(MOBILE_RENDER.cpuPressure>0||MOBILE_RENDER.runtimeFx<.72)){const gap=MOBILE_RENDER.cpuPressure>=1.5?330:240;if(GD027.lastExtraMini&&now-GD027.lastExtraMini<gap)return false;GD027.lastExtraMini=now}return _gd027ShouldPaintMini(now)};
@@ -88,7 +88,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastTime=
 addEventListener('pagehide',()=>{if(G.started)try{saveGame()}catch(_){}});
 
 // ---------- Replayability & Contramaré ----------
-function gd027PromoteVeteran(e){if(!e||e.dead||e.boss||e.guardian||e.guardianMinion||e.ngElite||e.miniBossId)return e;e.ngElite=true;e.ngBarrier=true;e.maxHp=e.hp=Math.round(e.maxHp*1.22);e.damage*=1.07;e.xp=Math.round(e.xp*1.32);if(!/Veterano/.test(e.name))e.name+=' Veterano';return e}
+function gd027PromoteVeteran(e){return promoteVeteran(e)}
 const _gd027ApplyNg=applyNgPlusEnemy;
 applyNgPlusEnemy=function(e){const r=_gd027ApplyNg(e);if(!ngActive()||!r)return r;const rule=gd027Rule();if(rule.id==='iron'){if(!r.boss&&!r.guardian)r.damage*=1.025}else if(rule.id==='echo'){const common=!r.boss&&!r.guardian&&!r.guardianMinion&&!r.miniBossId;if(common&&!r.ngElite&&worldRand(Math.floor(r.x*.11+r.y*.07),1700+ngCycle())<.085)gd027PromoteVeteran(r)}else if(rule.id==='surge'){r.speed*=r.boss||r.guardian?1.025:1.055;if(Number.isFinite(r.attackCD))r.attackCD*=.94}else if(rule.id==='drift'){if(!r.boss&&!r.guardian)r.xp=Math.round(r.xp*1.08)}return r};
 
@@ -97,10 +97,10 @@ const _gd027BirdCooldown=birdCooldown;birdCooldown=function(){let v=_gd027BirdCo
 const _gd027DashCooldown=dashCooldown;dashCooldown=function(){let v=_gd027DashCooldown();if(ngActive()&&gd027Rule()?.id==='surge')v*=.92;return Math.max(.58,v)};
 
 const _gd027TryParry=tryParry;
-tryParry=function(from){const ok=_gd027TryParry(from);if(ok&&ngActive()&&gd027Rule()?.id==='surge')player.stamina=Math.min(100,player.stamina+4);return ok};
+tryParry=function(from){const ok=_gd027TryParry(from);if(ok&&ngActive()&&gd027Rule()?.id==='surge')player.stamina=Math.min(maxStamina(),player.stamina+4);return ok};
 
-const _gd027DamageEnemy=damageEnemy;
-damageEnemy=function(e,amount,source,critical=false,strong=false){if(ngActive()&&gd027Rule()?.id==='iron'&&e?.ngElite&&['hook','pull','charged'].includes(source))amount*=1.15;return _gd027DamageEnemy(e,amount,source,critical,strong)};
+
+
 
 const _gd027ChooseEvent=chooseDynamicEvent;
 chooseDynamicEvent=function(){if(ngActive()&&gd027Rule()?.id==='echo'&&eventRoll(G.eventSeq,2727)<.24)return 'countertide';return _gd027ChooseEvent()};

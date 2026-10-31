@@ -23,4 +23,3 @@ if (!html.includes('<!-- GAME_ENTRY -->')) {
 html = html.replace('</head>', '<link rel="stylesheet" href="./src/styles/graphics.css">\n</head>');
 html = html.replace('Jogue offline em um unico arquivo.', 'Explore a ilha no navegador, com animações e qualidade gráfica ajustável.');
 writeFileSync(join(root, 'src/game/index.template.html'), html);
-console.log(`Beta importada: ${scripts.length} scripts. Execute npm run generate.`);

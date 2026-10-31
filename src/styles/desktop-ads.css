@@ -1,0 +1,16 @@
+#game-viewport{position:fixed;inset:0;overflow:hidden;transform:translateZ(0)}
+.desktop-ad{display:none;overflow:hidden}
+.desktop-ad[hidden]{display:none!important}
+.desktop-ad iframe{display:block;width:100%;height:100%;border:0}
+#playing-ad{position:fixed;left:0;top:140px;width:clamp(160px,18vw,240px);height:max(0px,calc(100dvh - 500px));z-index:6;background:transparent}
+.pause-ad{width:100%;aspect-ratio:468/60;align-self:center}
+.pause-ad iframe{width:468px;height:60px;transform-origin:top left}
+@media(min-width:1100px) and (pointer:fine) and (hover:hover){
+  html[data-desktop-ad="playing"] #playing-ad{display:block}
+  html[data-desktop-ad="pause"] #modal-backdrop{display:grid;grid-template-columns:minmax(0,1fr) min(60vw,830px) minmax(0,1fr);gap:20px;padding-inline:max(24px,calc((100vw - 1806px)/2))}
+  /* Keep the dialog centered even when a blocker hides either ad container. */
+  html[data-desktop-ad="pause"] #modal{grid-area:1/2;width:100%;min-width:0}
+  html[data-desktop-ad="pause"] #pause-ad-left{grid-area:1/1}
+  html[data-desktop-ad="pause"] #pause-ad-right{grid-area:1/3}
+  html[data-desktop-ad="pause"] .pause-ad{display:block}
+}

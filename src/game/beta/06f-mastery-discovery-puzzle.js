@@ -23,16 +23,8 @@ function qualityExpose(e,label,seconds=.55){if(!e||e.dead)return;e.vulnerable=Ma
 const _qualityBaseSetEnemyState=setEnemyState;
 setEnemyState=function(e,state,time=0){const r=_qualityBaseSetEnemyState(e,state,time);if(state==='alert'||state==='combat')qualityEnemyIntro(e);return r};
 
-const _qualityBaseDamageEnemy=damageEnemy;
-damageEnemy=function(e,amount,source,critical=false,strong=false){
- if(e&&!e.dead&&e.strikePending==='mushroomSpore'&&(['charged','hook','pull'].includes(source))){
-  e.strikePending=null;e.windup=0;e.stun=Math.max(e.stun,.62);qualityExpose(e,'ESPOROS INTERROMPIDOS',.95);text(e.x,e.y-e.r-42,'ESPOROS INTERROMPIDOS','#ecd29b',9);burst(e.x,e.y-16,'#d8b9d0',10,70);QUALITY_PASS.metrics.masteryInterrupts++;
- }
- if(e&&!e.dead&&e.strikePending==='wispBlink'&&(['hook','pull'].includes(source))){
-  e.strikePending=null;e.windup=0;e.phaseShift=0;e.stun=Math.max(e.stun,.48);qualityExpose(e,'LUZ PRESA',.78);text(e.x,e.y-e.r-39,'LUZ PRESA','#c8e8dc',9);burst(e.x,e.y-14,'#b9ddd0',11,75);QUALITY_PASS.metrics.masteryInterrupts++;
- }
- return _qualityBaseDamageEnemy(e,amount,source,critical,strong);
-};
+
+
 
 const _qualityBaseResolveEnemyStrike=resolveEnemyStrike;
 resolveEnemyStrike=function(e,kind){

@@ -27,17 +27,21 @@ Use **Gráficos e opções** na tela inicial ou **Pausa → Acessibilidade e des
 
 | Perfil | Limite de quadros/s | Resolução máxima | Terreno | Partículas |
 | --- | --- | --- | --- | --- |
-| Desempenho | 30 | 1× | 25% | 100 |
-| Balanceada | 30 | 1,5× | 37,5% | 200 |
-| Alta | 60 | 2× | 50% | 360 |
+| Desempenho | 30 | 1,25× | 37,5% | 100 |
+| Balanceada | 30 | 1,75× | 62,5% | 200 |
+| Alta | 60 | 2× | 75% | 360 |
 
 Automática usa Desempenho em celulares com até 4 GB de memória ou 4 processadores lógicos informados pelo navegador; nos outros celulares começa em Balanceada. Desktop começa em Alta. Uma escolha manual prevalece sobre essa detecção. Limites de quadros são metas, não garantia de desempenho.
 
 Os perfis também controlam resolução e frequência do minimapa, clima, vegetação decorativa, resolução do personagem e frequência de atualização da animação. Balanceada/Alta aumentam a nitidez mobile em relação à beta. Desempenho reduz sombras da interface. A lógica de combate, colisões e avisos de perigo permanece independente do orçamento gráfico. Desempenho adaptativo pode reduzir efeitos em situações pesadas e pode ser desligado.
 
+No mobile, apenas um aviso aparece por vez. Mensagens ambiente têm intervalo mínimo de oito segundos e cedem espaço ao combate; lembretes de objetivo ao fechar menus ficam no diário/mapa. Os prompts duplicados de interação, gancho e região são ocultados, mantendo os botões touch, a região no HUD e os alertas de perigo. O tutorial fica disponível na pausa. O terreno é desenhado com mais pixels e detalhes no cache, sem aumentar o zoom da câmera.
+
 A troca de perfil aplica-se imediatamente, redesenhando apenas o terreno em cache quando necessário, sem reiniciar inimigos, puzzles ou a partida. Pode ocorrer uma breve pausa ao redesenhar o terreno. `src/graphics/profiles.js` concentra os valores editáveis. O perfil efetivo fica em `document.documentElement.dataset.graphics`; `?render=mobile-balanced` permite inspecionar o caminho mobile em desktop enquanto a seleção estiver em Automática.
 
 ## Organização
+
+Publicidade no desktop: a partir de 1100 px, com mouse, o anúncio nativo flutua à esquerda entre os painéis da interface, sem reservar uma faixa nem reduzir o canvas. Se o script falhar, o anúncio fica oculto. A pausa mostra dois banners 468×60 nas laterais do menu, reduzidos proporcionalmente quando necessário. Celulares e janelas menores não carregam os anúncios. Os scripts ficam em iframes separados; a entrega depende da rede de anúncios e o jogo continua funcionando sem ela. A integração está em `src/game/desktop-ads.js` e `src/styles/desktop-ads.css`.
 
 - `src/game/beta/`: os 21 scripts da beta publicada, na ordem de `manifest.json`.
 - `src/game/index.template.html`: estrutura da página, HUD e menus da beta.

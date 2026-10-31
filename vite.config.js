@@ -19,7 +19,11 @@ function fileOfflineEntry(){
 }
 
 export default defineConfig({
+  server: {
+    allowedHosts: true
+  },
   base: './',
+  esbuild: { drop: ['console'], pure: ['globalThis.console.log'] },
   plugins:[fileOfflineEntry()],
   build: {
     rollupOptions: {

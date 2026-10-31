@@ -40,15 +40,16 @@ html = replaceOnce(html, '<script src="./js/game.js"></script>', `
     script.addEventListener('load', resolve, { once: true });
     script.addEventListener('error', () => reject(new Error('Não foi possível carregar ' + script.src)), { once: true });
   });
-  window.MareGameReady.catch(error => console.error(error));
+  window.MareGameReady.catch(() => {
+    const loading = document.getElementById('loading');
+    if (loading) loading.textContent = 'Não foi possível carregar o jogo.';
+  });
   document.body.appendChild(script);
 })();
 </script>
 <script type="module">
 if (location.protocol !== 'file:') {
-  window.MareGameReady.then(() => import('./src/pixi-player.js')).catch(error => {
-    console.warn('PixiJS indisponível; Nilo continua no renderizador Canvas.', error);
-  });
+  window.MareGameReady.then(() => import('./src/pixi-player.js')).catch(() => {});
 }
 </script>`.trim());
 
@@ -64,4 +65,3 @@ mkdirSync(join(root, 'public', 'js'), { recursive: true });
 for (const { name, css } of styles) writeFileSync(join(root, 'src', 'styles', `${name}.css`), css, 'utf8');
 writeFileSync(join(root, 'public', 'js', 'game.js'), game, 'utf8');
 writeFileSync(join(root, 'index.html'), html, 'utf8');
-console.log(`Importado ${source}: ${styles.length} estilos, 1 script e HTML.`);

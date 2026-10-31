@@ -1,0 +1,55 @@
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {parseAst} from 'rollup/parseAst';
+const root=resolve(import.meta.dirname,'../..');
+const backup=resolve(tmpdir(),'marebrava-combat-baseline-20261004');mkdirSync(backup,{recursive:true});
+const read=f=>readFileSync(resolve(root,f),'utf8');
+function edit(f,fn){const old=read(f);copyFileSync(resolve(root,f),resolve(backup,f.replaceAll('/','__')));const next=fn(old);parseAst(next);writeFileSync(resolve(root,f),next)}
+const once=(s,a,b)=>{if(s.split(a).length!==2)throw Error('Âncora não única: '+a.slice(0,80));return s.replace(a,b)};
+if(!read('src/game/beta/03-gameplay.js').includes('function promoteVeteran'))edit('src/game/beta/03-gameplay.js',s=>{
+ s=once(s,'e.recover=.2}return}if(e.stun>0','e.recover=Math.max(e.recover||0,.2)}return}if(e.stun>0');
+ s=once(s,"r:7,manual,boosted,dead:false}","r:7,manual,boosted,buildBonus:(player._gd026BirdTempo>0?1.20:1)*(player._gd026SplitCharge>0?1.35:1),dead:false}");
+ s=once(s,"if(boosted){text(bird.x", "player._gd026BirdTempo=0;player._gd026SplitCharge=0;if(boosted){text(bird.x");
+ s=once(s,"*(p.boosted?1.35:1),'poop'","*(p.boosted?1.35:1)*(p.buildBonus||1),'poop'");
+ s=once(s,"'undertowCharge','attackBuffer']","'undertowCharge','_gd026BirdTempo','_gd026SplitCharge','attackBuffer']");
+ s=once(s,'function updatePlayer(dt){for(let k', 'function updatePlayer(dt){const bufferReady=player.attackBuffer>0&&player.attackCD<=dt&&!player.charging;for(let k');
+ s=once(s,'if(player.attackBuffer>0&&player.attackCD<=0&&!player.charging)', 'if((bufferReady||player.attackBuffer>0)&&player.attackCD<=0&&!player.charging)');
+ s=once(s,'function setEnemyState(e,state,time=0)', "function cancelEnemyAttack(e){e.strikePending=null;e.guardianPending=null;e.bossPending=null;e.windup=0;e.parryable=false;e.hookBreakable=false;e.attackToken=null}\nfunction promoteVeteran(e){if(!e||e.dead||e.boss||e.guardian||e.guardianMinion||e.ngElite||e.miniBossId)return e;e.ngElite=true;e.ngBarrier=true;e.maxHp=e.hp=Math.round(e.maxHp*1.32);e.damage*=1.10;e.xp=Math.round(e.xp*1.65);if(!/Veterano/.test(e.name))e.name+=' Veterano';return e}\nfunction setEnemyState(e,state,time=0)");
+ s=once(s,' if(e.strikePending){e.aggro=true;', ' if(e.stun>0&&e.strikePending)cancelEnemyAttack(e);if(e.strikePending){e.aggro=true;');
+ s=once(s,' if(e.guardianPending){e.windup=', ' if(e.stun>0&&e.guardianPending)cancelEnemyAttack(e);if(e.guardianPending){e.windup=');
+ s=once(s,' if(e.bossPending){e.windup=', ' if(e.stun>0&&e.bossPending)cancelEnemyAttack(e);if(e.bossPending){e.windup=');
+ s=once(s,'dead:false,owner:e})','dead:false,owner:e,parryable:!e.boss&&!e.guardian||!!e.parryable})');
+ s=once(s,'if(elite&&!source.parryable)return false;', 'if(elite&&!(from===source?source.parryable:from?.parryable))return false;');
+ s=once(s,"if(e.guardian){if(hook?.target===e&&(hook.mode==='latched'||hook.mode==='reeling'))continue;updateGuardian(e,edt);continue}","if(e.guardian){updateGuardian(e,edt);continue}");
+ s=once(s,"if(hook?.target===e&&hook.mode==='reeling')return;updateBossMusic",'updateBossMusic');
+ s=once(s,'sound(\'execute\',1.2);killEnemy(e);',"sound('execute',1.2);e._gd026LastSource='execution';PLAYTEST.attacks++;PLAYTEST.hits++;PLAYTEST.executions=(PLAYTEST.executions||0)+1;PLAYTEST.damageDealt+=Math.max(0,e.hp);PLAYTEST.executionDamage=(PLAYTEST.executionDamage||0)+Math.max(0,e.hp);gameEvent('execute');killEnemy(e);");
+ s=once(s,'G.tutorial.attacked=true;PLAYTEST.attacks++;PLAYTEST.charged++;const primed=', 'const primed=');
+ s=once(s,'return false}const charge=clamp((held-.42)', 'return false}G.tutorial.attacked=true;PLAYTEST.attacks++;PLAYTEST.charged++;const charge=clamp((held-.42)');
+ s=once(s,'e.ngElite=!e.mini&&rng()<Math.min(.1+c*.035,.24);if(e.ngElite){e.maxHp=e.hp=Math.round(e.maxHp*1.32);e.damage*=1.1;e.xp=Math.round(e.xp*1.65);e.name+=\' Veterano\';e.ngBarrier=true}', 'if(!e.mini&&rng()<Math.min(.1+c*.035,.24))promoteVeteran(e)');
+ s=once(s,'foe.ngElite=true;foe.ngBarrier=true', 'promoteVeteran(foe)');
+ s=once(s,'applyNgPlusEnemy(e);if(opts.aggro', 'applyNgPlusEnemy(e);e.spawnR=e.r;e.spawnWeight=e.weight;e.spawnSpeed=e.speed;if(opts.aggro');
+ s=once(s,'e.splitDone=false;setEnemyState', 'e.splitDone=false;e.r=e.spawnR;e.weight=e.spawnWeight;e.speed=e.spawnSpeed;e.ngBarrier=!!e.ngElite;setEnemyState');
+ s=once(s,'if(!G.started||G.overlay||player.dashCD>0||player.dashTime>0)return;', 'if(!G.started||G.overlay||player.hp<=0||player.dashCD>0||player.dashTime>0)return;player.charging=false;player.chargeTime=0;player.attackBuffer=0;player.attackPressBuffered=false;');
+ s=once(s,'player.hp<=0||player.charging)return false;if(player.attackCD>0)', 'player.hp<=0||player.charging||player.dashTime>0)return false;if(player.attackCD>0)');
+ s=once(s,'for(let p of projectiles){p.age+=dt;', 'for(let p of projectiles){if(p.owner?.dead){p.dead=true;continue}p.age+=dt;');
+ s=once(s,'for(let h of hazards){h.age+=dt;', 'for(let h of hazards){if(h.owner?.dead){h.life=0;continue}h.age+=dt;');
+ s=s.replaceAll('const k=e.guardianPattern%3','const k=(e.guardianPattern-1)%3');
+ s=once(s,'if(e.guardianPattern%2)startGuardianAttack','if((e.guardianPattern-1)%2===0)startGuardianAttack');
+ s=once(s,'const kind=seq[e.pattern%seq.length]', 'const kind=seq[(e.pattern-1)%seq.length]');
+ return s;
+});
+edit('src/game/beta/06g-quests-builds-bosses.js',s=>{
+ s=once(s,"if(equipped('split_ring'))player._gd026SplitCharge=1", "if(equipped('split_ring'))player._gd026SplitCharge=4");
+ s=once(s," if(source==='poop'&&player._gd026BirdTempo>0){mult*=1.20;player._gd026BirdTempo=0;GD026.metrics.hybridProcs++}",'');
+ s=once(s," if(source==='poop'&&player._gd026SplitCharge>0){mult*=1.35;player._gd026SplitCharge=0;text(e.x,e.y-e.r-49,'LUZ FENDIDA','#cfe8dc',9)}",'');
+ s=once(s,"e.speed*=1.06;text(e.x", "e._gd026BaseSpeed=e.speed;e.speed*=1.06;text(e.x");
+ s=once(s,'if(r&&id){e._gd026Phase2=false;', 'if(r&&id){if(e._gd026BaseSpeed)e.speed=e._gd026BaseSpeed;e._gd026Phase2=false;');
+ s=once(s,"['sword','combo3','charged','hook','pull'].includes(e._gd026LastSource||'')", "['sword','combo3','charged','hook','pull','execution'].includes(e._gd026LastSource||'')");
+ return s;
+});
+edit('src/game/beta/06h-mobile-performance-contramare.js',s=>{
+ const ast=parseAst(s),n=ast.body.find(n=>n.type==='FunctionDeclaration'&&n.id.name==='gd027PromoteVeteran');
+ return s.slice(0,n.start)+'function gd027PromoteVeteran(e){return promoteVeteran(e)}'+s.slice(n.end);
+});
+process.stdout.write('Fase 1 aplicada; backup local em '+backup+'\n');

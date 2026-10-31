@@ -1,0 +1,13 @@
+import {readFileSync,writeFileSync} from 'node:fs';import {parseAst} from 'rollup/parseAst';
+const dir='src/game/beta/',read=f=>readFileSync(dir+f,'utf8'),write=(f,s)=>{parseAst(s);writeFileSync(dir+f,s)},once=(s,a,b)=>{if(s.split(a).length!==2)throw Error(a);return s.replace(a,b)};
+let s;
+s=read('03-gameplay.js');s=s.replace('<p>${d.desc}</p><div class="skill-rank"><span>${on?', '<p>${d.desc}</p><p>${rpgStatText(RPG_ITEMS[id]?.stats||{})}<br>Estilo: ${RPG_ITEMS[id]?.branch||"livre"}<br>Comparação: ${rpgItemComparison(id)}</p><div class="skill-rank"><span>${on?');
+s=once(s,'equipItem(b.dataset.equip);showEquipment()','equipItem(b.dataset.equip);player.hp=Math.min(player.hp,maxHP());player.stamina=Math.min(player.stamina,maxStamina());showEquipment()');
+s=once(s,"mudam regras, não apenas números.","combinam atributos e efeitos únicos.");
+s=once(s,'windup*=ngActive()?ngTempoFactor():1;e.bossPending','windup=Math.max(BALANCE.ngPlus.windupFloor,windup*(ngActive()?ngTempoFactor():1));e.bossPending');
+s=once(s,'windup*=ngActive()?ngTempoFactor():1;e.guardianPending','windup=Math.max(BALANCE.ngPlus.windupFloor,windup*(ngActive()?ngTempoFactor():1));e.guardianPending');
+s=once(s,"e.name+=' Veterano';return e","e.name+=' Veterano';rpgEnemyInit(e);return e");
+write('03-gameplay.js',s);
+s=read('04-renderer.js');s=once(s,"else if(d.kind==='enemy')drawEnemy(d.obj);","else if(d.kind==='enemy'){drawEnemy(d.obj);drawRpgPosture(d.obj)}");write('04-renderer.js',s);
+s=read('06h-mobile-performance-contramare.js');s=once(s,'clamp(player.stamina,0,100):100','clamp(player.stamina,0,maxStamina()):maxStamina()');write('06h-mobile-performance-contramare.js',s);
+const m=JSON.parse(read('manifest.json'));m.splice(m.indexOf('07-debug.js'),0,'06k-combat-interface.js');writeFileSync(dir+'manifest.json',JSON.stringify(m,null,2)+'\n');

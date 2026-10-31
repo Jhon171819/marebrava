@@ -9,8 +9,8 @@ async function start() {
   const app = new Application();
   const profile = () => {
     const tier = document.documentElement.dataset.graphics;
-    return tier === 'low' ? { actorResolution:1, actorFps:30 } :
-      tier === 'balanced' ? { actorResolution:1.5, actorFps:30 } : { actorResolution:2, actorFps:60 };
+    return tier === 'low' ? { actorResolution:1.25, actorFps:30 } :
+      tier === 'balanced' ? { actorResolution:1.75, actorFps:30 } : { actorResolution:2, actorFps:60 };
   };
   await app.init({ width:384, height:256, resolution:Math.min(devicePixelRatio || 1,profile().actorResolution), backgroundAlpha:0, antialias:true, preference:'webgl', autoStart:false, sharedTicker:false, preserveDrawingBuffer:true });
   const actor = new CharacterView(nilo);
@@ -38,7 +38,7 @@ async function start() {
         if(frames && !changed && time>=lastRenderTime && (paused || time-lastRenderTime<1/profile().actorFps-.001))return;
         app.renderer.render({container:stage}); frames++; lastRenderTime=time; lastState=state; lastPaused=paused;
       }
-      catch(error) { this.ready=false; document.documentElement.dataset.playerRenderer='canvas'; console.warn('Pixi indisponível; usando personagem Canvas.',error); }
+      catch { this.ready=false; document.documentElement.dataset.playerRenderer='canvas'; }
     },
     drawBody(ctx,x,y) { blit(ctx,0,0,128,128,x-64,y-80); },
     drawEffects(ctx,x,y) { blit(ctx,128,0,256,256,x-128,y-128); },
@@ -53,4 +53,4 @@ async function start() {
   document.documentElement.dataset.playerRenderer='pixi';
   if(import.meta.hot) import.meta.hot.dispose(()=>bridge.dispose());
 }
-start().catch(error=>console.warn('Pixi indisponível; Nilo continua no Canvas.',error));
+start().catch(()=>{document.documentElement.dataset.playerRenderer='canvas';});

@@ -91,7 +91,7 @@ try {
     // A movement update reaches the articulated rig; pausing freezes its pose.
     await evaluate(sessionId,mobile?"touchMove={x:1,y:0}":"keys.add('d')");
     await until(sessionId,"Number.isFinite(player.movementAngle) && MarePlayerRenderer.stats.state==='walk'");
-    assert.equal(await evaluate(sessionId,"Number.isFinite(player.movementAngle)"),true,JSON.stringify({errors,state:await evaluate(sessionId,'({overlay:G.overlay,started:G.started,hp:player.hp,keys:[...keys],loop:GAME_RENDER.loopRunning,frame,freeze:window.MARE_AI_PERCEPTION_FREEZE,logs:DEBUG.log})')}));
+    assert.equal(await evaluate(sessionId,"Number.isFinite(player.movementAngle)"),true,JSON.stringify({errors,state:await evaluate(sessionId,'({overlay:G.overlay,started:G.started,hp:player.hp,keys:[...keys],loop:GAME_RENDER.loopRunning,frame,freeze:window.MARE_AI_PERCEPTION_FREEZE})')}));
     await evaluate(sessionId,"keys.clear();showPause()");
     const frames=await evaluate(sessionId,'MarePlayerRenderer.stats.frames');await delay(250);
     assert.ok((await evaluate(sessionId,'MarePlayerRenderer.stats.frames'))-frames<=1,'paused rig keeps repainting');
@@ -112,7 +112,7 @@ try {
     await evaluate(sessionId,"document.getElementById('continue-btn').click()");
     await until(sessionId,'G.started && !GAME_RENDER.starting && !!BOOT.marks.firstGameFrame');
     assert.equal(await evaluate(sessionId,'runSelfTest().ok'),true);
-    console.log(JSON.stringify({mode:mobile?'mobile':'desktop',selfTest:self.ok,qualitySwitch:'preserves adventure and RNG',persistence:true}));
+
     await send('Target.disposeBrowserContext',{browserContextId});
   }
   for(const fallback of ['canvas-http','file']) {
@@ -127,7 +127,7 @@ try {
     await until(sessionId,'G.started && !GAME_RENDER.starting && !!BOOT.marks.firstGameFrame');
     assert.equal(await evaluate(sessionId,'!!window.MarePlayerRenderer'),false);
     assert.equal(await evaluate(sessionId,'runSelfTest().ok'),true);
-    console.log(JSON.stringify({mode:fallback,started:true,selfTest:true}));
+
     await send('Target.disposeBrowserContext',{browserContextId});
   }
   assert.deepEqual(errors,[],'browser exceptions');

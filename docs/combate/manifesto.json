@@ -1,0 +1,485 @@
+{
+  "date": "2026-10-03",
+  "timezone": "America/Fortaleza",
+  "root": "C:/Users/User/Documents/ChatGPT/marebrava",
+  "packageVersion": "2.6.0",
+  "buildId": "4.2-world5-gd028-final-player-experience",
+  "saveVersion": 7,
+  "baseCommit": "c614668bc23b83f940abb243a8c331e37f5f2c36",
+  "workingTreeStatus": "M README.md\n M index.html\n M public/js/game.js\n M scripts/browser-smoke-secure.mjs\n M scripts/browser-smoke.mjs\n M scripts/build-game.mjs\n M scripts/import-beta.mjs\n M scripts/import-original.mjs\n M src/game/beta/00-boot.js\n M src/game/beta/01-core.js\n M src/game/beta/03-gameplay.js\n M src/game/beta/06h-mobile-performance-contramare.js\n M src/game/beta/06i-final-player-polish.js\n M src/game/beta/06j-story-runtime.js\n M src/game/beta/07-debug.js\n M src/game/beta/09-loop-bootstrap.js\n M src/game/graphics.js\n M src/game/index.template.html\n M src/graphics/profiles.js\n M src/pixi-player.js\n M src/styles/beta/06-mobile-performance.css\n M src/styles/graphics.css\n M tests/encapsulation.test.mjs\n M tests/graphics.test.mjs\n M vite.config.js\n?? docs/\n?? tests/mobile-ui.test.mjs",
+  "files": [
+    {
+      "path": "src/game/beta/00-boot.js",
+      "bytes": 5161,
+      "lines": 15,
+      "sha256": "98817e4fcc1ab8967436f42a9715a34d39c191e1c0b1e755d1c9ccf4f25e23a3",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/01-core.js",
+      "bytes": 23618,
+      "lines": 55,
+      "sha256": "a91eac8763b18dac6941fbe2b700639273cece5848a7cc80d126bf225ded1d2c",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/01a-mobile-render.js",
+      "bytes": 10231,
+      "lines": 152,
+      "sha256": "4844e56b6a9b0a7bbcba94110858b92d283a78f8b99d132e6af79fe29a035a3f",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/02-content.js",
+      "bytes": 10355,
+      "lines": 100,
+      "sha256": "1f59af98a14243d540d5b974d4cccfbe747a47ae5791347e56c463107d9fb43c",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/02a-story-content.js",
+      "bytes": 12677,
+      "lines": 43,
+      "sha256": "86e622e084b9136b4cec3bc2df4724e50a8f1cd83a3ac64e5730725478d915dc",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/03-gameplay.js",
+      "bytes": 159621,
+      "lines": 343,
+      "sha256": "c764ca43023856e3db42416616668b990b3791244ab3cef23ab4117abe81e9fc",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/04-renderer.js",
+      "bytes": 44463,
+      "lines": 86,
+      "sha256": "4d4f7e64df95471c131ea75493d145bd5098d5891ee595f578a9ee345db6b8ee",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/05-ui-save.js",
+      "bytes": 38616,
+      "lines": 53,
+      "sha256": "c93377727b5a138253221ad38f15d20c723178212150a368a76ad27d77def48b",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06-world-v3.js",
+      "bytes": 40150,
+      "lines": 109,
+      "sha256": "513790aadc47e8ea694de1cd827faf5bda25bc1972eb3a5e8ce4ceb8de732b72",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06a-living-island.js",
+      "bytes": 28971,
+      "lines": 335,
+      "sha256": "f8acac5dce0536ce8c74685fa23c673f63a6994731c3463cc096d485e4d1492f",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06b-exploration-rhythm.js",
+      "bytes": 16663,
+      "lines": 133,
+      "sha256": "7dc486ade5f5020c99f3edb47560761042c6aec52a0fa54931d0f7e362598330",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06c0-agent-config.js",
+      "bytes": 1251,
+      "lines": 22,
+      "sha256": "8474808044fad35aa08618fcdaf3ed2eb66a036a03b6aac3f1f7c81c4269ad3d",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06c-journey-telemetry.js",
+      "bytes": 26294,
+      "lines": 180,
+      "sha256": "c79df23460c5c979c6fe66dca87aa5c2ec2b3a178922ade9bd4b6a29f34d00bc",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06d-ai-player-harness.js",
+      "bytes": 16470,
+      "lines": 66,
+      "sha256": "0b367a17e6bef45d43a0f30a920addca9f21053a71134b4e1b2722547c1977ac",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06e-encounter-rhythm.js",
+      "bytes": 9016,
+      "lines": 44,
+      "sha256": "9cb2214e373647981f2d384dbbb6d3bacf99f63908b92e63769bcd9ba62c9115",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06f-mastery-discovery-puzzle.js",
+      "bytes": 12478,
+      "lines": 150,
+      "sha256": "be0855a1452f0ff62022ef2d046849c1706234b4ffc08527bcbad6e3ac7eea20",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06g-quests-builds-bosses.js",
+      "bytes": 16720,
+      "lines": 140,
+      "sha256": "68a58fd045735d56695a085f8c6110339344e9bbebc6c0976fa15b12a05c6787",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06h-mobile-performance-contramare.js",
+      "bytes": 16613,
+      "lines": 142,
+      "sha256": "4cfe17e8ee3459f2606d023afb5672731ad7395b9526a4e2a28666200a790c01",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06i-final-player-polish.js",
+      "bytes": 5645,
+      "lines": 141,
+      "sha256": "47912966f9ce6623ef2211848757a85c839185952d6e4fe52de2fe37b38280f1",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/06j-story-runtime.js",
+      "bytes": 15234,
+      "lines": 40,
+      "sha256": "806ddf59945b3a38a8e5407b08d6664adfba6fdd557c9ecaaa3f7099fce19b2b",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/07-debug.js",
+      "bytes": 9692,
+      "lines": 13,
+      "sha256": "22904a28b1cbadcfef11859d88e7ce1e0fda041104ae40e0faed9067ab9dc91c",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/08-input.js",
+      "bytes": 6015,
+      "lines": 11,
+      "sha256": "914a90f4287cc3c172e3bd3936ed7281b9a52d9d83d0f2b171ffdd93541a95d8",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/09-loop-bootstrap.js",
+      "bytes": 3172,
+      "lines": 5,
+      "sha256": "e5c0a74596906810594ef3a7abcec942233240273627047fc2334d82ad32f8c1",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/game/beta/manifest.json",
+      "bytes": 587,
+      "lines": 26,
+      "sha256": "536ae73f2e3d387bdcfb2f27c0a36aa800d9ee2f8350cd8d8df152ce7242c226",
+      "kind": "gameplay-source"
+    },
+    {
+      "path": "src/character-lab.js",
+      "bytes": 2185,
+      "lines": 33,
+      "sha256": "05b6f6f58e1edabbd2a58780395fa0e8276d345703c063e7c1126a05b0ca1cd9",
+      "kind": "support"
+    },
+    {
+      "path": "src/characters/animation.js",
+      "bytes": 2851,
+      "lines": 52,
+      "sha256": "f447351cc968ea6ace2e240726cb30770b8698b3c2d8ff6832dc534e59cea96b",
+      "kind": "support"
+    },
+    {
+      "path": "src/characters/atlas.js",
+      "bytes": 4647,
+      "lines": 46,
+      "sha256": "10ec6be855a675fe91fd1d13509c23e188ac84a2b8500e92db84fd2214185c25",
+      "kind": "support"
+    },
+    {
+      "path": "src/characters/CharacterView.js",
+      "bytes": 4696,
+      "lines": 85,
+      "sha256": "8b0a246751db1575aa5eb29f5bb317b8ef4527e4cc090d2ad5f7288eacb03d35",
+      "kind": "support"
+    },
+    {
+      "path": "src/characters/definitions.js",
+      "bytes": 458,
+      "lines": 11,
+      "sha256": "f2bdcabdd39592928fc4fb6535bf084f00d4d4c3a11eb5383da51a9fe7de57e8",
+      "kind": "support"
+    },
+    {
+      "path": "src/characters/directions.js",
+      "bytes": 365,
+      "lines": 8,
+      "sha256": "800d57508bbd248f2f4b1cb4d233547bbfa0d52114500f8bfd4bb99d10f01303",
+      "kind": "support"
+    },
+    {
+      "path": "src/game/graphics.js",
+      "bytes": 7527,
+      "lines": 137,
+      "sha256": "bdd34b61f67c2bfc249f0508d8f89a753d77757ddaf1e91a47545e580d5d0179",
+      "kind": "support"
+    },
+    {
+      "path": "src/game/index.template.html",
+      "bytes": 13825,
+      "lines": 85,
+      "sha256": "0ffdbe10a7a4964f96aba6fc4f5eae7bbd74ed0c90186a355ec1261b58dc7ec9",
+      "kind": "support"
+    },
+    {
+      "path": "src/graphics/profiles.js",
+      "bytes": 1381,
+      "lines": 18,
+      "sha256": "372203c4138ba6cf5bb11e92386dbe04e119d96add909a6b1f8e390e1102ab42",
+      "kind": "support"
+    },
+    {
+      "path": "src/pixi-player.js",
+      "bytes": 3698,
+      "lines": 57,
+      "sha256": "1de7c699588630c5dd7a1b413a2dd49c1fbf026fca0d9b75fd501728b6347336",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/base.css",
+      "bytes": 31199,
+      "lines": 11,
+      "sha256": "a33d0edecde66ac605195580fc1e3b4603ff7b851be5ab33ba5cc2ef6ed0a381",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/01-base.css",
+      "bytes": 31284,
+      "lines": 11,
+      "sha256": "376a9d8635723b1a32f8ce1c482f217893558602ab9871fdc847a0055a369487",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/02-polish.css",
+      "bytes": 8859,
+      "lines": 27,
+      "sha256": "40f61312c6afd304c9b6b5e64162dfb9bc649fab3e278dba194dd5cba8fd6b51",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/03-playtest.css",
+      "bytes": 778,
+      "lines": 11,
+      "sha256": "3d6a32ce9fdee63e20af6fb4710e5ea7de1ba976f8a9dfb197a8cd1c0853eb7f",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/04-world.css",
+      "bytes": 2976,
+      "lines": 32,
+      "sha256": "9136666261ec9957e698684fec825fdd0095040e9255cbe54f8c1723f2aa4397",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/05-title.css",
+      "bytes": 2261,
+      "lines": 25,
+      "sha256": "113980593da42114ce6ae158e7e44578f298a5a3b79e465b04dc36e583e18d4b",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/beta/06-mobile-performance.css",
+      "bytes": 5463,
+      "lines": 41,
+      "sha256": "c8c7b77096030165b7c0d795121e2b597d7bfcdf7b38233d8aefe70a8d6c5693",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/blind-playtest-fixes-v15.css",
+      "bytes": 712,
+      "lines": 11,
+      "sha256": "b9c7a922c9b12dcac3adf2df0282abc7b548f5ee12d427f1bfe1dbcd518cae36",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/graphics.css",
+      "bytes": 3553,
+      "lines": 47,
+      "sha256": "fc163dfc0b5e95f0ae2813ae0e5c20811afd89b39bb0d6b0819d08b6750faef6",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/macro-polish-v11.css",
+      "bytes": 2066,
+      "lines": 11,
+      "sha256": "50f444f503f80fa725ba1fb5d9a2bf7d516f97346a77b466cab48262e9cb0d99",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/macro-polish-v13.css",
+      "bytes": 6013,
+      "lines": 13,
+      "sha256": "79eeb0ca24bb8f409be97b6ddda7bb6fe00eec83a2377d40f3dcf75ae1245a32",
+      "kind": "support"
+    },
+    {
+      "path": "src/styles/world-v3.css",
+      "bytes": 3921,
+      "lines": 44,
+      "sha256": "d6f872cb4d523b7647495caba4e21b956ebc16804917001878a73b72a3a170db",
+      "kind": "support"
+    },
+    {
+      "path": "scripts/browser-smoke-secure.mjs",
+      "bytes": 16235,
+      "lines": 142,
+      "sha256": "bbbfb2141031f1524b541b6710c4d4c7dbeace2c4f51fa483835dd681018bbff",
+      "kind": "support"
+    },
+    {
+      "path": "scripts/browser-smoke.mjs",
+      "bytes": 10379,
+      "lines": 136,
+      "sha256": "00abd756a424e1590f7fd997fca800112832d34624ff0fe08acb63c03a4b3b04",
+      "kind": "support"
+    },
+    {
+      "path": "scripts/build-game.mjs",
+      "bytes": 7024,
+      "lines": 83,
+      "sha256": "680b6d562c70645f817c38f4a7dcf5207a6ae1b9a641ad5b86758d45dc1f8fbd",
+      "kind": "support"
+    },
+    {
+      "path": "scripts/import-beta.mjs",
+      "bytes": 1815,
+      "lines": 26,
+      "sha256": "a46da6965807c28a4ebebc23c3f449f36b0240b497d0789082e4a003a4c96dc5",
+      "kind": "support"
+    },
+    {
+      "path": "scripts/import-original.mjs",
+      "bytes": 4026,
+      "lines": 68,
+      "sha256": "a948165afb507d0f59a6cefcec7b13076c5324baf66d7802b01ce1cb9f1ebd49",
+      "kind": "support"
+    },
+    {
+      "path": "tests/animation.test.mjs",
+      "bytes": 3210,
+      "lines": 59,
+      "sha256": "146543f7ba292abb35415aff0dad1605c99f2d1165940677d4e3ee42777452ae",
+      "kind": "support"
+    },
+    {
+      "path": "tests/encapsulation.test.mjs",
+      "bytes": 1525,
+      "lines": 33,
+      "sha256": "109d83d640aef528a7706d65a17870d2d5e9a0317f4aa1d85521e44d258af316",
+      "kind": "support"
+    },
+    {
+      "path": "tests/graphics.test.mjs",
+      "bytes": 2298,
+      "lines": 42,
+      "sha256": "ff8329cc9e93bbbe66102879e609fe1e52152baad8d16b628faf2bc3fb04ecb1",
+      "kind": "support"
+    },
+    {
+      "path": "tests/mobile-ui.test.mjs",
+      "bytes": 2364,
+      "lines": 39,
+      "sha256": "ab08bb78b9592bae6ddf1f528a35535fe41eeeca71a5e6249fb35f0cebbd2ac2",
+      "kind": "support"
+    },
+    {
+      "path": "tests/story.test.mjs",
+      "bytes": 2329,
+      "lines": 45,
+      "sha256": "fcfce47691db5fd364be4481859cbb967c8c4d1cac59914468776d22f7bd4927",
+      "kind": "support"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8994,
+      "lines": 86,
+      "sha256": "b5eb26f96d770d9f67eae69249a3054e9fba5b451ad1919dec5bb294a9cdc7c2",
+      "kind": "support"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1005,
+      "lines": 26,
+      "sha256": "aba2ece145f1ec63a166deb7ef133c06386a1aae0b9f863b48641ad83e36a638",
+      "kind": "support"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 39670,
+      "lines": 1269,
+      "sha256": "a695b6c4d15b748586102a0e24920c2275e2a9bda04897c8a60df33439056de9",
+      "kind": "support"
+    },
+    {
+      "path": "vite.config.js",
+      "bytes": 1787,
+      "lines": 34,
+      "sha256": "02bc7ec7634ebb3eef8f68c13725f030d5d94129da5ceba0daefddfe360b7835",
+      "kind": "support"
+    },
+    {
+      "path": "index.html",
+      "bytes": 14426,
+      "lines": 99,
+      "sha256": "cd0352f75d65e80ada15ca70ef1201c73ac7b038426e04c05ee35a08137cb5ed",
+      "kind": "support"
+    },
+    {
+      "path": "characters.html",
+      "bytes": 1928,
+      "lines": 15,
+      "sha256": "cc80d2fff2f6ef2ee962536537d0f520b5c43dcfc70ac512f518894ccf6e48e5",
+      "kind": "support"
+    },
+    {
+      "path": "public/js/game.js",
+      "bytes": 509647,
+      "lines": 2468,
+      "sha256": "ecd8e0eee54ad4957a9fdb107e48bfd8505f80782b0cb8a3b1897fcde3850236",
+      "kind": "generated-runtime"
+    }
+  ],
+  "namedDefinitions": 854,
+  "validation": {
+    "npmTest": {
+      "passed": 19,
+      "failed": 0
+    },
+    "npmRunCheck": "passed",
+    "sourceHashesVerified": 63,
+    "reportLinksVerified": 80,
+    "reportSnippetsParsed": 13,
+    "directedCombatChecks": {
+      "passed": 7,
+      "failed": 0,
+      "runner": "docs/combate/verificar-relatorio.mjs",
+      "cases": [
+        "counter and vulnerable damage",
+        "frontal crab guard",
+        "three combo hits",
+        "full charged strike",
+        "bird diminishing stun",
+        "base stat and XP formulas",
+        "boss recovery overwritten after GD026"
+      ]
+    },
+    "browserPlaytest": "not executed",
+    "hardwareMobile": "not executed"
+  },
+  "limitations": [
+    "Static function calls do not resolve DOM event paths or dynamic dispatch.",
+    "Existing tests do not cover every combat rule.",
+    "Working tree includes pre-existing uncommitted changes."
+  ]
+}

@@ -4,6 +4,7 @@
   "01a-mobile-render.js",
   "02-content.js",
   "02a-story-content.js",
+  "02b-combat-rules.js",
   "03-gameplay.js",
   "04-renderer.js",
   "05-ui-save.js",
@@ -19,6 +20,7 @@
   "06h-mobile-performance-contramare.js",
   "06i-final-player-polish.js",
   "06j-story-runtime.js",
+  "06k-combat-interface.js",
   "07-debug.js",
   "08-input.js",
   "09-loop-bootstrap.js"

@@ -22,6 +22,7 @@ function finalObjectiveLine(){
 }
 
 function finalShowObjectiveRecap(force=false){
+  if(mobileRenderEnabled())return false;
   if(!G?.started||G.overlay||player?.combat>0||player?.hp<=0)return false;
   if(!force&&G.playTime-FINAL_POLISH.lastRecapAt<55)return false;
   const line=finalObjectiveLine();

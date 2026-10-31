@@ -68,7 +68,7 @@ const _gd026HookRange=hookRange;hookRange=function(){let v=_gd026HookRange();if(
 const _gd026HookCooldown=hookCooldown;hookCooldown=function(){let v=_gd026HookCooldown();if(equipped('storm_hook'))v*=.90;const s=gd026Synergies();if(s.cordame)v*=.94;return Math.max(.48,v)};
 
 const _gd026PerfectDodge=triggerPerfectDodge;
-triggerPerfectDodge=function(from){const ok=_gd026PerfectDodge(from);if(ok){const s=gd026Synergies();if(s.cordameInstinto){player.hookCD=Math.max(0,player.hookCD-.55);GD026.metrics.hybridProcs++}if(s.asasInstinto&&bird){bird.manualCD=Math.max(0,bird.manualCD-1.4);player._gd026BirdTempo=4;GD026.metrics.hybridProcs++}if(equipped('split_ring'))player._gd026SplitCharge=1}return ok};
+triggerPerfectDodge=function(from){const ok=_gd026PerfectDodge(from);if(ok){const s=gd026Synergies();if(s.cordameInstinto){player.hookCD=Math.max(0,player.hookCD-.55);GD026.metrics.hybridProcs++}if(s.asasInstinto&&bird){bird.manualCD=Math.max(0,bird.manualCD-1.4);player._gd026BirdTempo=4;GD026.metrics.hybridProcs++}if(equipped('split_ring'))player._gd026SplitCharge=4}return ok};
 const _gd026TryParry=tryParry;
 tryParry=function(from){const ok=_gd026TryParry(from);if(ok){const s=gd026Synergies();if(s.cordameInstinto){player.hookCD=Math.max(0,player.hookCD-.65);GD026.metrics.hybridProcs++}}return ok};
 
@@ -83,24 +83,11 @@ function gd026MiniMastery(e,source){if(!e?.miniBossId||e.dead)return 1;let m=1,b
  else if(e.miniBossId==='saltJaw'&&(e.packBoost||1)<=1&&['sword','combo3','charged','hook','pull'].includes(source)){m=1.16;breakIt=true}
  if(breakIt&&(e._gd026MasteryCue||0)<=G.playTime){e._gd026MasteryCue=G.playTime+.8;GD026.metrics.minibossMasteryBreaks++;text(e.x,e.y-e.r-50,'LEITURA CERTA','#ffe2a0',10)}return m}
 
-const _gd026DamageEnemy=damageEnemy;
-damageEnemy=function(e,amount,source,critical=false,strong=false){
- const s=gd026Synergies();let mult=1;
- if(['hook','pull'].includes(source)&&s.cordame)mult*=1.12;
- if(source==='poop'&&s.asas)mult*=1.10;
- if((player.counterWindow||0)>0&&combatMeleeSource(source)&&s.instinto)mult*=1.12;
- if(['hook','pull'].includes(source)&&s.cordameAsas&&e&&!e.dead){e._gd026HookMarkUntil=G.playTime+3.2}
- if(source==='poop'&&e?._gd026HookMarkUntil>G.playTime){mult*=1.22;e._gd026HookMarkUntil=0;GD026.metrics.hybridProcs++;text(e.x,e.y-e.r-48,'MARCA + PIPOCA','#f4e3a8',9)}
- if(source==='poop'&&player._gd026BirdTempo>0){mult*=1.20;player._gd026BirdTempo=0;GD026.metrics.hybridProcs++}
- if(source==='poop'&&player._gd026SplitCharge>0){mult*=1.35;player._gd026SplitCharge=0;text(e.x,e.y-e.r-49,'LUZ FENDIDA','#cfe8dc',9)}
- if(equipped('storm_hook')&&['hook','pull'].includes(source))mult*=1.12;
- mult*=gd026MiniMastery(e,source);
- if(mult>1.001)GD026.metrics.synergyHits++;
- return _gd026DamageEnemy(e,amount*mult,source,critical,strong)
-};
+
+
 
 function gd026MiniPhase(e){if(!e?.miniBossId||e.dead||e._gd026Phase2||e.hp/e.maxHp>.55)return;e._gd026Phase2=true;GD026.metrics.minibossPhases++;GD026.miniPhaseSeen.add(e.miniBossId);const id=e.miniBossId;
- if(id==='galeShell'){e.guard=Math.max(e.guard,1.8);e.guardAngle=angle(e,player);e.speed*=1.06;text(e.x,e.y-e.r-48,'VENTO CONTRÁRIO','#f1d8a0',11)}
+ if(id==='galeShell'){e.guard=Math.max(e.guard,1.8);e.guardAngle=angle(e,player);e._gd026BaseSpeed=e.speed;e.speed*=1.06;text(e.x,e.y-e.r-48,'VENTO CONTRÁRIO','#f1d8a0',11)}
  else if(id==='hollowKing'){for(let i=0;i<4;i++){const a=i/4*TAU;addHazard('spore',e.x+Math.cos(a)*72,e.y+Math.sin(a)*56,48,.28+i*.08,Math.max(2,Math.round(e.damage*.4)),e,{life:3.4,tick:.25})}e.recover=.65;text(e.x,e.y-e.r-48,'FLORAÇÃO AZEDA','#dbbfd4',11)}
  else if(id==='splitLight'){for(let i=0;i<2;i++){let a=(i?.65:-.65)+angle(player,e),x=e.x+Math.cos(a)*55,y=e.y+Math.sin(a)*55;spawnEnemy('wisp',x,y,Math.max(1,e.level-1),{hp:32,damage:Math.max(4,e.damage*.55),speed:118,xp:0,noRespawn:true,aggro:true,mini:true,gd026MiniParent:id,name:'Eco de Luz'})}e.phaseShift=1;text(e.x,e.y-e.r-48,'ECO PARTIDO','#c5e3db',11)}
  else if(id==='rustRam'){const a=angle(e,player);enemyShot(e,a-.22,260,'spit');enemyShot(e,a,285,'spit');enemyShot(e,a+.22,260,'spit');e.recover=.72;text(e.x,e.y-e.r-48,'CANOS EM BRASA','#edc27b',11)}
@@ -111,21 +98,21 @@ const _gd026UpdateSmartEnemy=updateSmartEnemy;
 updateSmartEnemy=function(e,dt,d,homeD){gd026MiniPhase(e);return _gd026UpdateSmartEnemy(e,dt,d,homeD)};
 
 const _gd026ResolveBossAttack=resolveBossAttack;
-resolveBossAttack=function(e,kind){const r=_gd026ResolveBossAttack(e,kind);if(!e||e.dead)return r;const windows={mossCrown:.52,mireTide:.38,bronzeRush:.66,sealStorm:.44,undertow:.30,summon:.25};const w=windows[kind]||0;if(w){e.recover=Math.max(e.recover||0,w);if(['mossCrown','bronzeRush','sealStorm'].includes(kind)){e.vulnerable=Math.max(e.vulnerable||0,w+.18);text(e.x,e.y-e.r-54,kind==='bronzeRush'?'INVESTIDA ABERTA':kind==='mossCrown'?'COROA EXPOSTA':'RECUPERANDO','#ffe1a0',9);GD026.metrics.bossRecoveryWindows++}}return r};
+resolveBossAttack=function(e,kind){const r=_gd026ResolveBossAttack(e,kind);if(!e||e.dead)return r;const windows=BALANCE.boss.recovery;const w=windows[kind]||0;if(w){e.recover=Math.max(e.recover||0,w);if(['mossCrown','bronzeRush','sealStorm'].includes(kind)){e.vulnerable=Math.max(e.vulnerable||0,w+.18);text(e.x,e.y-e.r-54,kind==='bronzeRush'?'INVESTIDA ABERTA':kind==='mossCrown'?'COROA EXPOSTA':'RECUPERANDO','#ffe1a0',9);GD026.metrics.bossRecoveryWindows++}}return r};
 
 const _gd026ResetElite=resetEliteEnemy;
-resetEliteEnemy=function(e,reason='reset'){const id=e?.miniBossId;const r=_gd026ResetElite(e,reason);if(r&&id){e._gd026Phase2=false;e._gd026MasteryCue=0;enemies.filter(n=>!n.dead&&n.gd026MiniParent===id).forEach(n=>n.dead=true)}return r};
+resetEliteEnemy=function(e,reason='reset'){const id=e?.miniBossId;const r=_gd026ResetElite(e,reason);if(r&&id){if(e._gd026BaseSpeed)e.speed=e._gd026BaseSpeed;e._gd026Phase2=false;e._gd026MasteryCue=0;enemies.filter(n=>!n.dead&&n.gd026MiniParent===id).forEach(n=>n.dead=true)}return r};
 
 const _gd026KillEnemy=killEnemy;
-killEnemy=function(e){const wasMini=e?.miniBossId&&!e.dead?e.miniBossId:null;const nearby=player&&e?dist(player,e):999;const meleeKill=e&&['sword','combo3','charged','hook','pull'].includes(e._gd026LastSource||'');const r=_gd026KillEnemy(e);if(wasMini){enemies.filter(n=>!n.dead&&n.gd026MiniParent===wasMini).forEach(n=>n.dead=true);const item=MINIBOSS_REWARD_ITEMS[wasMini];if(item&&!hasItem(item)){grantEquipment(item,true);GD026.metrics.minibossRewards++;GD026.rewardSeen.add(item);toast('ESPÓLIO ÚNICO · '+EQUIPMENT_DEFS[item].name,'gold');sound('level')}}if(equipped('salt_ring')&&nearby<120&&meleeKill){player.stamina=Math.min(100,player.stamina+12);player.hookCD=Math.max(0,player.hookCD-.3);text(player.x,player.y-56,'FOME DE SAL','#e8d49b',9)}return r};
+killEnemy=function(e){const wasMini=e?.miniBossId&&!e.dead?e.miniBossId:null;const nearby=player&&e?dist(player,e):999;const meleeKill=e&&['sword','combo3','charged','hook','pull','execution'].includes(e._gd026LastSource||'');const r=_gd026KillEnemy(e);if(wasMini){enemies.filter(n=>!n.dead&&n.gd026MiniParent===wasMini).forEach(n=>n.dead=true);const item=MINIBOSS_REWARD_ITEMS[wasMini];if(item&&!hasItem(item)){grantEquipment(item,true);GD026.metrics.minibossRewards++;GD026.rewardSeen.add(item);toast('ESPÓLIO ÚNICO · '+EQUIPMENT_DEFS[item].name,'gold');sound('level')}}if(equipped('salt_ring')&&nearby<120&&meleeKill){player.stamina=Math.min(maxStamina(),player.stamina+12);player.hookCD=Math.max(0,player.hookCD-.3);text(player.x,player.y-56,'FOME DE SAL','#e8d49b',9)}return r};
 
 // Registra a fonte final para recompensas de abate corpo a corpo.
-const _gd026DamageEnemyTracked=damageEnemy;
-damageEnemy=function(e,amount,source,critical=false,strong=false){if(e&&!e.dead)e._gd026LastSource=source;return _gd026DamageEnemyTracked(e,amount,source,critical,strong)};
+
+
 
 // Exibe ressonâncias ativas junto da árvore, para o jogador saber por que a build se comporta diferente.
-const _gd026ShowSkills=showSkills;
-showSkills=function(){_gd026ShowSkills();const modal=$('modal');if(!modal)return;const s=gd026Synergies(),active=[];if(s.cordame)active.push('CORDAME · gancho/puxada +12% e recarga melhor');if(s.asas)active.push('ASAS · Pipoca +10% dano');if(s.instinto)active.push('INSTINTO · contra-ataques +12%');if(s.cordameAsas)active.push('CORDAME + ASAS · gancho marca o alvo para Pipoca');if(s.cordameInstinto)active.push('CORDAME + INSTINTO · timing acelera o gancho');if(s.asasInstinto)active.push('ASAS + INSTINTO · esquiva perfeita prepara Pipoca');const box=document.createElement('div');box.className='playtest-card';box.innerHTML='<b>RESSONÂNCIAS DA BUILD</b><br>'+(active.length?active.join('<br>'):'Invista em 4 pontos de um ramo para especializá-lo, ou 2 + 2 em dois ramos para abrir uma sinergia híbrida.');modal.appendChild(box)};
+
+
 
 const _gd026Prepare=prepareGameState;
 prepareGameState=function(data=null){gd026Reset();const r=_gd026Prepare(data);return r};

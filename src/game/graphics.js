@@ -81,9 +81,8 @@ function graphicsRefreshTerrain() {
       try { for(const item of GRAPHICS.baked)drawScenery(item); }
       finally { tc.restore(); }
     }
-  } catch(error) {
+  } catch {
     terrain=oldTerrain;
-    console.warn('Mantendo o terreno anterior.',error);
   } finally { seed=oldSeed; ctx=oldCtx; landPath=oldLand; innerPath=oldInner; }
 }
 function graphicsApply() {
@@ -122,3 +121,16 @@ showSettings=function() {
 const graphicsTitleButton=document.createElement('button');
 graphicsTitleButton.id='title-settings'; graphicsTitleButton.className='secondary'; graphicsTitleButton.textContent='Gráficos e opções';
 graphicsTitleButton.onclick=showSettings; document.querySelector('.title-actions').appendChild(graphicsTitleButton);
+
+// Keep the current touch tutorial available on demand, outside the playfield.
+const graphicsShowPause=showPause;
+showPause=function() {
+  const result=graphicsShowPause();
+  if(mobileRenderEnabled()) {
+    const guide=document.createElement('p'); guide.id='mobile-help'; guide.className='footer-note';
+    guide.textContent=$('tutorial-title').textContent+' · '+$('tutorial-text').textContent;
+    $('modal').querySelector('.help-grid')?.replaceWith(guide);
+  }
+  return result;
+};
+$('pause-btn').onclick=showPause;
